@@ -97,7 +97,11 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
                 Screen6AiGrading(
                     onNavigateBack = { navController.popBackStack() },
                     onReviewClick = { navController.navigate(Screen.EduLesson.route) },
-                    onApproveMarks = { navController.navigate(Screen.EduCelebration.route) }
+                    onApproveMarks = {
+                        navController.navigate(Screen.EduStudentHome.route) {
+                            popUpTo(Screen.EduStudentHome.route) { inclusive = true }
+                        }
+                    }
                 )
             }
 

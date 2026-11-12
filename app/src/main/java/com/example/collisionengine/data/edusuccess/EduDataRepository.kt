@@ -47,6 +47,10 @@ object EduDataRepository {
     var selectedStudentId by mutableStateOf("S0001")
     var selectedClassId by mutableStateOf("12A")
 
+    /** Latest live OCR + AI Grading result used to update Overall Progress & Learning Path after OCR check. */
+    var lastOcrAnalysis by mutableStateOf<AiSubmissionAnalysis?>(null)
+    var lastOcrAssignmentTitle by mutableStateOf<String?>(null)
+
     val students get() = _students
     val riskScores get() = _riskScores
     val riskFeatures get() = _riskFeatures
@@ -340,8 +344,13 @@ object EduDataRepository {
         assignment: AssignmentRow,
         score: Float,
         feedback: String,
-        confidence: Float = 0.92f
+        confidence: Float = 0.92f,
+        analysis: AiSubmissionAnalysis? = null
     ): String {
+        if (analysis != null) {
+            lastOcrAnalysis = analysis
+            lastOcrAssignmentTitle = assignment.assignmentTitle
+        }
         val subId = "SUB_LIVE_${_submissions.size + 1}"
         _submissions.add(
             0,

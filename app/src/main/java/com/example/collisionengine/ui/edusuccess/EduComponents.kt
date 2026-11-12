@@ -161,38 +161,52 @@ fun DonutProgress(
 }
 
 /**
- * Green Upward Trend Sparkline (Screen 3)
+ * Green Upward Trend Sparkline with area fill & endpoint dot (Screen 3)
  */
 @Composable
 fun MiniTrendSparkline(
     modifier: Modifier = Modifier
-        .width(80.dp)
-        .height(30.dp),
+        .fillMaxWidth()
+        .height(40.dp),
     lineColor: Color = VerifiedGreen
 ) {
     Canvas(modifier = modifier) {
         val w = size.width
         val h = size.height
+        val pts = listOf(
+            Offset(0f, h * 0.88f),
+            Offset(w * 0.16f, h * 0.72f),
+            Offset(w * 0.28f, h * 0.78f),
+            Offset(w * 0.44f, h * 0.54f),
+            Offset(w * 0.56f, h * 0.58f),
+            Offset(w * 0.72f, h * 0.36f),
+            Offset(w * 0.85f, h * 0.39f),
+            Offset(w, h * 0.12f)
+        )
 
-        val path = Path().apply {
-            moveTo(0f, h * 0.85f)
-            cubicTo(
-                w * 0.3f, h * 0.8f,
-                w * 0.45f, h * 0.5f,
-                w * 0.7f, h * 0.4f
-            )
-            cubicTo(
-                w * 0.85f, h * 0.35f,
-                w * 0.92f, h * 0.15f,
-                w, h * 0.1f
-            )
+        val linePath = Path().apply {
+            moveTo(pts.first().x, pts.first().y)
+            pts.drop(1).forEach { lineTo(it.x, it.y) }
+        }
+        val fillPath = Path().apply {
+            moveTo(pts.first().x, h)
+            pts.forEach { lineTo(it.x, it.y) }
+            lineTo(w, h)
+            close()
         }
 
         drawPath(
-            path = path,
-            color = lineColor,
-            style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
+            path = fillPath,
+            brush = Brush.verticalGradient(
+                colors = listOf(lineColor.copy(alpha = 0.22f), Color.Transparent)
+            )
         )
+        drawPath(
+            path = linePath,
+            color = lineColor,
+            style = Stroke(width = 2.5.dp.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
+        )
+        drawCircle(color = lineColor, radius = 4.dp.toPx(), center = pts.last())
     }
 }
 
@@ -696,10 +710,10 @@ fun EduBottomNavBar(
                 )
             }
 
-            // Analytics
+            // Progress
             EduNavItem(
                 icon = Icons.Filled.BarChart,
-                label = "Analytics",
+                label = "Progress",
                 isSelected = selectedTab == "analytics",
                 onClick = { onTabSelected("analytics") }
             )

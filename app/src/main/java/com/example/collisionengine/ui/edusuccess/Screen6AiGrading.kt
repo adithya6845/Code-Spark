@@ -137,19 +137,23 @@ fun Screen6AiGrading(
                 )
                 gradeResult.onSuccess { report ->
                     liveAnalysis = report
+                    EduDataRepository.lastOcrAnalysis = report
+                    EduDataRepository.lastOcrAssignmentTitle =
+                        selectedAssignment?.assignmentTitle ?: uploadedMeta.fileName
                     selectedAssignment?.let { asg ->
                         EduDataRepository.recordLiveAiSubmission(
                             studentId = studentId,
                             assignment = asg,
                             score = report.score,
-                            feedback = report.summaryFeedback
+                            feedback = report.summaryFeedback,
+                            analysis = report
                         )
                     }
                 }.onFailure { err ->
-                    errorMessage = "GPT Evaluation Error: ${err.message}"
+                    errorMessage = "AI Evaluation Error: ${err.message}"
                 }
             }.onFailure { err ->
-                errorMessage = "Llama 3.2 Vision OCR Error: ${err.message}"
+                errorMessage = "Vision OCR Error: ${err.message}"
             }
 
             isProcessing = false
@@ -182,26 +186,60 @@ fun Screen6AiGrading(
                     .padding(horizontal = 20.dp, vertical = 12.dp),
                 color = Color.Transparent
             ) {
-                Button(
-                    onClick = {
-                        if (liveAnalysis == null && !isProcessing) {
-                            runAiGradingPipeline()
-                        } else {
-                            onReviewClick()
+                if (liveAnalysis == null) {
+                    Button(
+                        onClick = {
+                            if (!isProcessing) runAiGradingPipeline()
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp),
+                        shape = RoundedCornerShape(26.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
+                    ) {
+                        Text(
+                            text = "Run OCR & AI Grading",
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                } else {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        OutlinedButton(
+                            onClick = onReviewClick,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(52.dp),
+                            shape = RoundedCornerShape(26.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.2.dp, PrimaryBlue)
+                        ) {
+                            Text(
+                                text = "Practice Lesson",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = PrimaryBlue
+                            )
                         }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    shape = RoundedCornerShape(26.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
-                ) {
-                    Text(
-                        text = if (liveAnalysis == null) "Run OCR & AI Grading" else "Practice Weak Concepts ->",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
+                        Button(
+                            onClick = onApproveMarks,
+                            modifier = Modifier
+                                .weight(1.3f)
+                                .height(52.dp),
+                            shape = RoundedCornerShape(26.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
+                        ) {
+                            Text(
+                                text = "View Learning Path ->",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        }
+                    }
                 }
             }
         }

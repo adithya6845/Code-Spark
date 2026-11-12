@@ -151,8 +151,8 @@ object AssignmentAiGrader {
     }
 
     /**
-     * Step 1: Call meta/llama-3.2-11b-vision-instruct on NVIDIA NIM to extract all handwritten lines,
-     * approximate vertical positions (0.0 top to 1.0 bottom), and OCR corrections/observations.
+     * Step 1: Call active NVIDIA NIM Vision Instruct models (`nvidia/nemotron-3.5-super-vl-120b-a12b`
+     * with fallback to `meta/llama-3.2-90b-vision-instruct`) to extract handwritten lines & errors.
      */
     suspend fun runLlamaVisionOcr(
         context: Context,
@@ -162,82 +162,99 @@ object AssignmentAiGrader {
     ): Result<Pair<String, String>> = withContext(Dispatchers.IO) {
         val key = getNvidiaKey(context)
         if (key.isBlank()) {
-            return@withContext Result.failure(IllegalStateException("NVIDIA Llama 3.2 Vision API key is missing. Tap the key icon to add it."))
+            return@withContext Result.failure(IllegalStateException("NVIDIA Vision API key is missing. Tap the key icon to add it."))
         }
 
-        try {
-            val base64Img = bitmapToBase64Jpeg(bitmap)
-            val promptText = buildString {
-                append("You are an educational OCR & handwriting vision expert.\n")
-                append("Read every line of the student's uploaded assignment image from top to bottom.\n")
-                if (assignment != null) {
-                    append("Expected Assignment (${assignment.assignmentId}): ${assignment.question}\n")
-                }
-                if (studentNotes.isNotBlank()) {
-                    append("Student note: $studentNotes\n")
-                }
-                append("Respond strictly with valid JSON containing:\n")
-                append("{\n")
-                append("  \"transcription\": \"exact multi-line transcription including line numbers and approximate vertical position [0.00-1.00] for each equation/step\",\n")
-                append("  \"ocr_observations\": \"handwriting clarity, any arithmetic/algebra slips or notation corrections spotted directly in the image\"\n")
-                append("}")
+        val base64Img = bitmapToBase64Jpeg(bitmap)
+        val promptText = buildString {
+            append("You are an educational OCR & handwriting vision expert.\n")
+            append("Read every line of the student's uploaded assignment image from top to bottom.\n")
+            if (assignment != null) {
+                append("Expected Assignment (${assignment.assignmentId}): ${assignment.question}\n")
             }
+            if (studentNotes.isNotBlank()) {
+                append("Student note: $studentNotes\n")
+            }
+            append("Respond strictly with valid JSON containing:\n")
+            append("{\n")
+            append("  \"transcription\": \"exact multi-line transcription including line numbers and approximate vertical position [0.00-1.00] for each equation/step\",\n")
+            append("  \"ocr_observations\": \"handwriting clarity, any arithmetic/algebra slips or notation corrections spotted directly in the image\"\n")
+            append("}")
+        }
 
-            val contentArray = JSONArray()
-                .put(JSONObject().put("type", "text").put("text", promptText))
-                .put(
-                    JSONObject()
-                        .put("type", "image_url")
-                        .put("image_url", JSONObject().put("url", "data:image/jpeg;base64,$base64Img"))
-                )
+        val contentArray = JSONArray()
+            .put(JSONObject().put("type", "text").put("text", promptText))
+            .put(
+                JSONObject()
+                    .put("type", "image_url")
+                    .put("image_url", JSONObject().put("url", "data:image/jpeg;base64,$base64Img"))
+            )
 
-            val payload = JSONObject()
-                .put("model", "meta/llama-3.2-11b-vision-instruct")
-                .put(
-                    "messages",
-                    JSONArray().put(
-                        JSONObject()
-                            .put("role", "user")
-                            .put("content", contentArray)
+        val visionModels = listOf("nvidia/nemotron-3.5-super-vl-120b-a12b", "meta/llama-3.2-90b-vision-instruct")
+        var lastError = "NVIDIA Vision OCR request failed"
+
+        for (modelName in visionModels) {
+            try {
+                val payload = JSONObject()
+                    .put("model", modelName)
+                    .put(
+                        "messages",
+                        JSONArray().put(
+                            JSONObject()
+                                .put("role", "user")
+                                .put("content", contentArray)
+                        )
                     )
-                )
-                .put("max_tokens", 700)
-                .put("temperature", 0.2)
+                    .put("max_tokens", 1800)
+                    .put("temperature", 0.2)
 
-            val conn = (URL("https://integrate.api.nvidia.com/v1/chat/completions").openConnection() as HttpURLConnection).apply {
-                requestMethod = "POST"
-                setRequestProperty("Authorization", "Bearer $key")
-                setRequestProperty("Content-Type", "application/json")
-                connectTimeout = 20000
-                readTimeout = 45000
-                doOutput = true
+                val conn = (URL("https://integrate.api.nvidia.com/v1/chat/completions").openConnection() as HttpURLConnection).apply {
+                    requestMethod = "POST"
+                    setRequestProperty("Authorization", "Bearer $key")
+                    setRequestProperty("Content-Type", "application/json")
+                    connectTimeout = 20000
+                    readTimeout = 60000
+                    doOutput = true
+                }
+
+                OutputStreamWriter(conn.outputStream).use { it.write(payload.toString()) }
+                val code = conn.responseCode
+                val body = (if (code in 200..299) conn.inputStream else conn.errorStream)
+                    ?.bufferedReader()?.use { it.readText() } ?: ""
+                conn.disconnect()
+
+                if (code == 404 || code == 410) {
+                    lastError = "Vision model $modelName unavailable ($code)"
+                    continue
+                }
+                if (code !in 200..299) {
+                    lastError = "Vision OCR HTTP $code: $body"
+                    continue
+                }
+
+                val msgObj = JSONObject(body)
+                    .getJSONArray("choices")
+                    .getJSONObject(0)
+                    .getJSONObject("message")
+                val rawContent = msgObj.optString("content", "").takeIf { it.isNotBlank() && it != "null" }
+                    ?: msgObj.optString("reasoning_content", "")
+                val cleaned = rawContent.trim()
+                if (cleaned.isBlank()) {
+                    lastError = "Vision model $modelName returned empty response"
+                    continue
+                }
+
+                val parsed = parseJsonLoose(cleaned)
+                val transcription = parsed?.optString("transcription")?.takeIf { it.isNotBlank() } ?: cleaned
+                val observations = parsed?.optString("ocr_observations")?.takeIf { it.isNotBlank() }
+                    ?: "OCR transcribed via $modelName."
+                return@withContext Result.success(transcription to observations)
+            } catch (e: Exception) {
+                lastError = e.message ?: e.toString()
             }
-
-            OutputStreamWriter(conn.outputStream).use { it.write(payload.toString()) }
-            val code = conn.responseCode
-            val body = (if (code in 200..299) conn.inputStream else conn.errorStream)
-                ?.bufferedReader()?.use { it.readText() } ?: ""
-            conn.disconnect()
-
-            if (code !in 200..299) {
-                return@withContext Result.failure(RuntimeException("Llama Vision OCR HTTP $code: $body"))
-            }
-
-            val rawContent = JSONObject(body)
-                .getJSONArray("choices")
-                .getJSONObject(0)
-                .getJSONObject("message")
-                .getString("content")
-                .trim()
-
-            val parsed = parseJsonLoose(rawContent)
-            val transcription = parsed?.optString("transcription")?.takeIf { it.isNotBlank() } ?: rawContent
-            val observations = parsed?.optString("ocr_observations")?.takeIf { it.isNotBlank() }
-                ?: "OCR transcribed via Llama 3.2 Vision Instruct."
-            Result.success(transcription to observations)
-        } catch (e: Exception) {
-            Result.failure(e)
         }
+
+        Result.failure(RuntimeException(lastError))
     }
 
     /**
@@ -251,9 +268,10 @@ object AssignmentAiGrader {
         ocrTranscription: String,
         ocrObservations: String
     ): Result<AiSubmissionAnalysis> = withContext(Dispatchers.IO) {
-        val key = getOpenAiKey(context)
-        if (key.isBlank()) {
-            return@withContext Result.failure(IllegalStateException("OpenAI API key is missing. Tap the key icon to add it."))
+        val openAiKey = getOpenAiKey(context)
+        val nvidiaKey = getNvidiaKey(context)
+        if (openAiKey.isBlank() && nvidiaKey.isBlank()) {
+            return@withContext Result.failure(IllegalStateException("OpenAI and NVIDIA API keys are missing. Tap the key icon to add one."))
         }
 
         val maxMarks = assignment?.maxMarks ?: 5f
@@ -295,18 +313,28 @@ object AssignmentAiGrader {
             Rubric:
             $rubricText
 
-            Llama 3.2 Vision OCR Transcription:
+            Vision OCR Transcription:
             $ocrTranscription
 
             OCR Notes:
             $ocrObservations
         """.trimIndent()
 
-        val candidateModels = listOf("gpt-4o", "gpt-4o-mini", "gpt-4.1")
-        var lastError = "OpenAI request failed"
+        val candidates = mutableListOf<Triple<String, String, String>>()
+        if (openAiKey.isNotBlank()) {
+            candidates.add(Triple("https://api.openai.com/v1/chat/completions", openAiKey, "gpt-4o"))
+            candidates.add(Triple("https://api.openai.com/v1/chat/completions", openAiKey, "gpt-4o-mini"))
+            candidates.add(Triple("https://api.openai.com/v1/chat/completions", openAiKey, "gpt-4.1"))
+        }
+        if (nvidiaKey.isNotBlank()) {
+            candidates.add(Triple("https://integrate.api.nvidia.com/v1/chat/completions", nvidiaKey, "nvidia/nemotron-3.5-super-vl-120b-a12b"))
+        }
 
-        for (modelName in candidateModels) {
+        var lastError = "Grading request failed"
+
+        for ((endpointUrl, bearerKey, modelName) in candidates) {
             try {
+                val isOpenAi = endpointUrl.contains("api.openai.com")
                 val payload = JSONObject()
                     .put("model", modelName)
                     .put(
@@ -315,16 +343,18 @@ object AssignmentAiGrader {
                             .put(JSONObject().put("role", "system").put("content", systemPrompt))
                             .put(JSONObject().put("role", "user").put("content", userPrompt))
                     )
-                    .put("response_format", JSONObject().put("type", "json_object"))
                     .put("temperature", 0.2)
-                    .put("max_tokens", 850)
+                    .put("max_tokens", if (isOpenAi) 900 else 1800)
+                if (isOpenAi) {
+                    payload.put("response_format", JSONObject().put("type", "json_object"))
+                }
 
-                val conn = (URL("https://api.openai.com/v1/chat/completions").openConnection() as HttpURLConnection).apply {
+                val conn = (URL(endpointUrl).openConnection() as HttpURLConnection).apply {
                     requestMethod = "POST"
-                    setRequestProperty("Authorization", "Bearer $key")
+                    setRequestProperty("Authorization", "Bearer $bearerKey")
                     setRequestProperty("Content-Type", "application/json")
                     connectTimeout = 20000
-                    readTimeout = 45000
+                    readTimeout = 60000
                     doOutput = true
                 }
 
@@ -334,22 +364,20 @@ object AssignmentAiGrader {
                     ?.bufferedReader()?.use { it.readText() } ?: ""
                 conn.disconnect()
 
-                if (code == 404) {
-                    lastError = "Model $modelName unavailable ($code)"
+                if (code !in 200..299) {
+                    lastError = "Grading $modelName HTTP $code: $body"
                     continue
                 }
-                if (code !in 200..299) {
-                    return@withContext Result.failure(RuntimeException("OpenAI HTTP $code: $body"))
-                }
 
-                val rawContent = JSONObject(body)
+                val msgObj = JSONObject(body)
                     .getJSONArray("choices")
                     .getJSONObject(0)
                     .getJSONObject("message")
-                    .getString("content")
-                    .trim()
+                val rawContent = msgObj.optString("content", "").takeIf { it.isNotBlank() && it != "null" }
+                    ?: msgObj.optString("reasoning_content", "")
+                val cleaned = rawContent.trim()
+                val json = parseJsonLoose(cleaned) ?: continue
 
-                val json = parseJsonLoose(rawContent) ?: JSONObject()
                 val score = json.optDouble("score", 0.0).toFloat().coerceIn(0f, maxMarks)
                 val correctMarks = json.optDouble("correct_marks", score.toDouble()).toFloat().coerceIn(0f, maxMarks)
                 val partialMarks = json.optDouble("partial_marks", 0.0).toFloat().coerceIn(0f, maxMarks)
@@ -388,7 +416,7 @@ object AssignmentAiGrader {
                 }
 
                 val summary = json.optString("summary_feedback", "")
-                    .ifBlank { "Analyzed via Llama 3.2 Vision OCR + $modelName." }
+                    .ifBlank { "Analyzed via Vision OCR + $modelName." }
 
                 return@withContext Result.success(
                     AiSubmissionAnalysis(
