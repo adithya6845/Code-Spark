@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import com.example.collisionengine.data.network.CampusAiAdvisorClient
 import com.example.collisionengine.data.network.DatabricksClient
 import com.example.collisionengine.ui.components.AnimatedWaveform
 import com.example.collisionengine.ui.components.ChatBubble
@@ -48,6 +51,8 @@ fun ResearchScreen(
     var inputHost by remember { mutableStateOf(DatabricksClient.getHost(context)) }
     var inputToken by remember { mutableStateOf(DatabricksClient.getToken(context)) }
     var inputSpaceId by remember { mutableStateOf(DatabricksClient.getSpaceId(context)) }
+    var inputOpenAiKey by remember { mutableStateOf(CampusAiAdvisorClient.getOpenAiKey(context)) }
+    var inputNvidiaKey by remember { mutableStateOf(CampusAiAdvisorClient.getNvidiaKey(context)) }
 
     LaunchedEffect(messages.size, isLoading) {
         val total = listState.layoutInfo.totalItemsCount
@@ -61,18 +66,38 @@ fun ResearchScreen(
             onDismissRequest = { showConfigDialog = false },
             title = {
                 Text(
-                    text = "Databricks Genie Config",
+                    text = "Campus AI & Keys Config",
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
                 )
             },
             text = {
-                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
                     Text(
-                        text = "Connects directly to Databricks Genie Agent for live campus search.",
+                        text = "Configures Databricks Genie, OpenAI (sk-...) and NVIDIA NIM (nvapi-...) for live advice.",
                         fontSize = 12.sp,
                         color = Color.Gray
                     )
+                    OutlinedTextField(
+                        value = inputOpenAiKey,
+                        onValueChange = { inputOpenAiKey = it },
+                        label = { Text("OpenAI API Key (sk-...)") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = inputNvidiaKey,
+                        onValueChange = { inputNvidiaKey = it },
+                        label = { Text("NVIDIA NIM API Key (nvapi-...)") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
                     OutlinedTextField(
                         value = inputHost,
                         onValueChange = { inputHost = it },
@@ -100,6 +125,7 @@ fun ResearchScreen(
                 Button(
                     onClick = {
                         DatabricksClient.saveSettings(context, inputHost, inputToken, inputSpaceId)
+                        CampusAiAdvisorClient.saveKeys(context, inputOpenAiKey, inputNvidiaKey)
                         showConfigDialog = false
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
@@ -190,7 +216,7 @@ fun ResearchScreen(
                                     .padding(horizontal = 14.dp, vertical = 6.dp)
                             ) {
                                 Text(
-                                    text = "⚡ Databricks Genie Active",
+                                    text = "⚡ Databricks Genie + NVIDIA AI Active",
                                     style = MaterialTheme.typography.labelMedium,
                                     color = PrimaryBlue,
                                     fontWeight = FontWeight.Bold
@@ -258,7 +284,7 @@ fun ResearchScreen(
                                 )
                                 Spacer(modifier = Modifier.width(12.dp))
                                 Text(
-                                    text = "Fetching response from Databricks Genie...",
+                                    text = "Consulting Databricks Genie + NVIDIA AI...",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color.Gray
                                 )

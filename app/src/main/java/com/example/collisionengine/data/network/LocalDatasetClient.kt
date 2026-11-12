@@ -88,4 +88,109 @@ object LocalDatasetClient {
 
         return matches.take(3)
     }
+
+    /**
+     * Finds profiles (Faculty & Students) by the technologies or topics requested by the user.
+     */
+    fun findProfilesByTechnology(query: String): List<ProfileMatch> {
+        val q = query.lowercase(Locale.ROOT)
+        val matches = mutableListOf<ProfileMatch>()
+        val addedNames = mutableSetOf<String>()
+
+        val stopWords = setOf(
+            "who", "can", "help", "me", "in", "this", "teachnlogies", "technologies", "technology",
+            "show", "profiles", "profile", "the", "with", "and", "for", "find", "someone", "please",
+            "which", "what", "where", "how"
+        )
+        val keywords = q.split(Regex("[^a-zA-Z0-9+#]"))
+            .map { it.trim().lowercase(Locale.ROOT) }
+            .filter { it.length >= 2 && it !in stopWords }
+
+        // Faculty search
+        allFaculty.forEach { f ->
+            val haystack = "${f.name} ${f.department} ${f.researchInterests} ${f.expertise}".lowercase(Locale.ROOT)
+            val matched = if (keywords.isEmpty()) true else keywords.any { kw -> haystack.contains(kw) }
+            if (matched) {
+                val name = f.name ?: return@forEach
+                if (addedNames.add(name)) {
+                    matches.add(
+                        ProfileMatch(
+                            name = name,
+                            role = "Faculty • ${f.department ?: "Computer Science"}",
+                            matchReasonTitle = "Faculty Technology Lead",
+                            matchReasonText = f.expertise ?: f.researchInterests ?: "Campus Research Mentor",
+                            tags = f.researchInterests?.split(",")?.map { it.trim() }?.take(3) ?: listOf("Research", "Expert")
+                        )
+                    )
+                }
+            }
+        }
+
+        // Student search
+        allStudents.forEach { s ->
+            val haystack = "${s.name} ${s.department} ${s.skills} ${s.projects}".lowercase(Locale.ROOT)
+            val matched = if (keywords.isEmpty()) true else keywords.any { kw -> haystack.contains(kw) }
+            if (matched) {
+                val name = s.name ?: return@forEach
+                if (addedNames.add(name)) {
+                    matches.add(
+                        ProfileMatch(
+                            name = name,
+                            role = "${s.department ?: "CSE"} • ${s.year ?: "3rd"} Year",
+                            matchReasonTitle = "Peer Specialist",
+                            matchReasonText = s.projects?.takeIf { it.isNotBlank() } ?: s.skills ?: "Experienced peer",
+                            tags = s.skills?.split(",")?.map { it.trim() }?.take(3) ?: listOf("Peer", "Tech")
+                        )
+                    )
+                }
+            }
+        }
+
+        if (matches.isEmpty()) {
+            return extractProfilesMentionedInText("Dr. Sameer Iyer, Dr. Yash Malhotra, Dr. Emily Chen, Sophia Kim, Aarav Sharma")
+        }
+
+        return matches.take(4)
+    }
+
+    /**
+     * Determines whether to show profiles and which ones based on the user's intent.
+     * When user specifically asks "who can help me in this technologies show me the profiles":
+     * returns the matching profiles!
+     * When user asks for "skills which will help me and how to fix it":
+     * returns empty list so the response focuses cleanly on the skills list and fix-it plan!
+     */
+    fun extractProfilesForQuery(query: String, answerText: String): List<ProfileMatch> {
+        val q = query.lowercase(Locale.ROOT)
+
+        val isAskingForPeopleOrProfiles = q.contains("who can help") ||
+                q.contains("who knows") ||
+                q.contains("profiles") ||
+                q.contains("profile") ||
+                q.contains("mentor") ||
+                q.contains("faculty") ||
+                q.contains("collaborat") ||
+                q.contains("team") ||
+                q.contains("expert") ||
+                q.contains("who works")
+
+        val isAskingForSkillsOnly = (q.contains("skill") || q.contains("placement") || q.contains("fix it") || q.contains("fix")) &&
+                !isAskingForPeopleOrProfiles
+
+        // If the user asked "what skills should I learn" or "skills to fix it" (without asking for profiles):
+        if (isAskingForSkillsOnly) {
+            return emptyList()
+        }
+
+        // If the user asked "who can help me in this technologies show me the profiles":
+        if (isAskingForPeopleOrProfiles) {
+            val techMatches = findProfilesByTechnology(query)
+            if (techMatches.isNotEmpty()) {
+                return techMatches
+            }
+        }
+
+        // Fallback: check who is explicitly mentioned in the text
+        return extractProfilesMentionedInText(answerText)
+    }
 }

@@ -56,6 +56,113 @@ object CampusGenieSearchEngine {
     fun answerQuery(query: String, liveDatabricksNotes: String = ""): GenieAnswer {
         val q = query.lowercase(Locale.ROOT).trim()
 
+        // 0. Scenario: Placement Skills & Software Engineering / How to Fix It
+        if (q.contains("skill") || q.contains("placement") || q.contains("fix it") || q.contains("fix") || (q.contains("software") && q.contains("engineer"))) {
+            val text = """
+Here is a comprehensive breakdown of the essential skills you need for Software Engineering placements, plus an actionable plan to "Fix It":
+
+🎯 1. Non-Negotiable Core Skills (Every Company)
+• One Programming Language (Deeply): Master Java, Python, or C++. Understand OOP, memory management, collections, and exception handling.
+• Data Structures & Algorithms (DSA): The primary interview filter. Arrays, Strings, HashMaps, Two Pointers, Trees, Graphs, and Dynamic Programming (NeetCode 150 patterns).
+• CS Fundamentals: Operating Systems (Threads, Concurrency), DBMS (SQL joins, Indexing, Normalization), Computer Networks (HTTP/HTTPS, TCP/IP, REST).
+• Git & GitHub: Daily version control, pull requests, and branch workflows.
+
+💻 2. Role-Specific Development Skills
+• Backend Path: Spring Boot (Java) or FastAPI/Django (Python) or Node.js/Express, RESTful APIs, PostgreSQL / MySQL, and Redis caching.
+• Frontend Path: Modern React / Next.js, TypeScript, TailwindCSS, State Management (Zustand/Redux).
+• System Design Basics: Horizontal vs Vertical scaling, Load Balancers, Database Sharding, Caching strategies.
+
+🛠️ 3. How to 'Fix It' (Action Plan)
+• Step 1 (Diagnose): If you have no interview calls → Fix your resume & projects. If you fail online tests → Practice DSA daily. If you fail technical rounds → Practice mock interviews out loud.
+• Step 2 (12-Week Prep Roadmap):
+  - Weeks 1–4: Master 1 language + DSA core patterns (Arrays, HashMaps, Trees).
+  - Weeks 5–8: Build & deploy 2 real portfolio projects (e.g. real-time collaborative system, not tutorial clones).
+  - Weeks 9–12: CS fundamentals review, System Design basics, and Pramp mock interviews.
+• Step 3 (Portfolio Fix): Deploy apps live on Vercel/Railway with clear GitHub READMEs, architecture diagrams, and test suites.
+• Step 4 (Resume Metrics): Use numbers on your resume (e.g., "Reduced query latency by 35%", "Served 500+ active users").
+            """.trimIndent()
+
+            val profiles = listOf(
+                ProfileMatch(
+                    name = "Dr. Sameer Iyer",
+                    role = "Faculty • Computer Science",
+                    matchReasonTitle = "Software Systems & Placement Mentor",
+                    matchReasonText = "Algorithms, Software Architecture, System Design",
+                    tags = listOf("Software Engineering", "Algorithms", "Systems")
+                ),
+                ProfileMatch(
+                    name = "Dr. Yash Malhotra",
+                    role = "Faculty • Information Technology",
+                    matchReasonTitle = "Industry Placement Advisor",
+                    matchReasonText = "Cloud Platforms, Full Stack Engineering, Placement Training",
+                    tags = listOf("Cloud", "Full Stack", "Placements")
+                )
+            )
+
+            val decision = DecisionAnalysis(
+                skillCoverage = "94% (5 / 5 Skills Covered)",
+                skillCoveragePercent = 94,
+                projectFeasibility = "92% (High Chance)",
+                projectFeasibilityPercent = 92,
+                missingSkill = "Live System Deployment & CI/CD",
+                relevantFaculty = "Dr. Sameer Iyer (Software Systems)",
+                relatedResearch = "3 Papers on Distributed Systems",
+                potentialOutcomes = "Product Companies (High) • Tier-1 Placements (High)",
+                suggestedProjectTitle = "High-Throughput Scalable Microservices Architecture",
+                suggestedProjectDesc = "Production-grade distributed system with caching, message queues, and automated CI/CD pipeline."
+            )
+
+            return GenieAnswer(text = text, decisionAnalysis = decision, matchedProfiles = profiles)
+        }
+
+        // 0.5 Scenario: Who can help in these technologies / Show profiles
+        if (q.contains("who can help") || q.contains("profiles") || q.contains("profile") || q.contains("mentor") || q.contains("collaborat")) {
+            val matchedFaculty = allFaculty.take(2)
+            val matchedStudents = allStudents.take(2)
+            val profiles = mutableListOf<ProfileMatch>()
+
+            matchedFaculty.forEach { fac ->
+                profiles.add(
+                    ProfileMatch(
+                        name = fac.name ?: "Dr. Sameer Iyer",
+                        role = "Faculty • ${fac.department ?: "Computer Science"}",
+                        matchReasonTitle = "Faculty Technology Lead",
+                        matchReasonText = fac.expertise ?: fac.researchInterests ?: "Campus Research Mentor",
+                        tags = fac.researchInterests?.split(",")?.map { it.trim() }?.take(3) ?: listOf("Research", "Mentor")
+                    )
+                )
+            }
+            matchedStudents.forEach { s ->
+                profiles.add(
+                    ProfileMatch(
+                        name = s.name ?: "Peer Specialist",
+                        role = "${s.department ?: "CSE"} • ${s.year ?: "3rd"} Year",
+                        matchReasonTitle = "Peer Specialist",
+                        matchReasonText = s.projects?.takeIf { it.isNotBlank() } ?: s.skills ?: "Experienced peer",
+                        tags = s.skills?.split(",")?.map { it.trim() }?.take(3) ?: listOf("Student", "Peer")
+                    )
+                )
+            }
+
+            val text = "• Campus Technology Mentors: Here are the top faculty and peers available to collaborate on campus.\n" +
+                    "• Explore their verified research domains, publications, and open lab initiatives below."
+
+            val decision = DecisionAnalysis(
+                skillCoverage = "90% (4 / 5 Skills Covered)",
+                skillCoveragePercent = 90,
+                projectFeasibility = "88% (High Chance)",
+                projectFeasibilityPercent = 88,
+                missingSkill = "Cross-lab Coordination",
+                relevantFaculty = profiles.firstOrNull()?.name ?: "Dr. Sameer Iyer",
+                relatedResearch = "Campus Collaboration Mesh",
+                potentialOutcomes = "Research Paper (High) • Hackathon (High)",
+                suggestedProjectTitle = "Campus Tech Synergy Mesh",
+                suggestedProjectDesc = "Multi-disciplinary project combining faculty expertise with student engineers."
+            )
+
+            return GenieAnswer(text = text, decisionAnalysis = decision, matchedProfiles = profiles)
+        }
+
         // 1. Scenario: Aarav + Sophia / Campus Traffic / IoT + CV
         if ((q.contains("aarav") && q.contains("sophia")) || (q.contains("traffic") && (q.contains("ai") || q.contains("iot") || q.contains("collaborate")))) {
             val profiles = listOf(

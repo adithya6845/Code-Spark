@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.collisionengine.data.model.ChatMessage
+import com.example.collisionengine.data.network.CampusAiAdvisorClient
 import com.example.collisionengine.data.network.CampusGenieSearchEngine
-import com.example.collisionengine.data.network.DatabricksClient
 import com.example.collisionengine.data.network.LocalDatasetClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,33 +45,21 @@ class ResearchViewModel(application: Application) : AndroidViewModel(application
         _queryText.value = ""
 
         viewModelScope.launch {
-            var answerText = ""
-            try {
-                // 1. Query live Databricks Genie
-                val liveDatabricks = DatabricksClient.askGenie(query, appContext)
-                if (liveDatabricks.isNotBlank() && !liveDatabricks.contains("Failed", true)) {
-                    answerText = liveDatabricks
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            // Query using Databricks Genie -> User OpenAI Key -> NVIDIA NIM API -> Local Engine cascade
+            val (answerText, source) = CampusAiAdvisorClient.getAdvice(query, appContext)
 
-            // 2. Fallback to CampusGenieSearchEngine
-            if (answerText.isBlank()) {
-                val genieSearch = CampusGenieSearchEngine.answerQuery(query)
-                answerText = genieSearch.text
-            }
-
-            val mentionedProfiles = LocalDatasetClient.extractProfilesMentionedInText(answerText)
+            // Determine profile matching based on user intent (skills list vs who can help profiles)
+            val matchingProfiles = LocalDatasetClient.extractProfilesForQuery(query, answerText)
 
             val aiMsg = ChatMessage(
                 text = answerText,
                 isUser = false,
-                isTopMatch = mentionedProfiles.isNotEmpty(),
-                topMatches = mentionedProfiles
+                isTopMatch = matchingProfiles.isNotEmpty(),
+                topMatches = matchingProfiles
             )
             _messages.value = _messages.value + aiMsg
             _isLoading.value = false
         }
     }
 }
+
