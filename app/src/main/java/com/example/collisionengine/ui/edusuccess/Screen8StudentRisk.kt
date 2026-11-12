@@ -2,6 +2,7 @@ package com.example.collisionengine.ui.edusuccess
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -9,7 +10,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -31,45 +34,32 @@ fun Screen8StudentRisk(
 ) {
     val studentId = EduDataRepository.selectedStudentId
     val isCoreLoaded = EduDataRepository.isCoreLoaded
-    val isLogsLoaded = EduDataRepository.isLogsLoaded
 
     val student = remember(studentId, isCoreLoaded) { EduDataRepository.getStudent(studentId) }
     val risk = remember(studentId, isCoreLoaded) { EduDataRepository.getRisk(studentId) }
-    val features = remember(studentId, isCoreLoaded) { EduDataRepository.getRiskFeatures(studentId) }
-    val attSummary = remember(studentId, isLogsLoaded) { EduDataRepository.getAttendanceSummary(studentId) }
 
-    val riskPercent = ((risk?.riskScore ?: 0.68f) * 100).roundToInt()
-    val riskLevelLabel = "${risk?.riskLevel ?: "High"} Risk"
-    val riskColor = when (risk?.riskLevel) {
-        "High" -> AlertRed
-        "Medium" -> SyntheticOrange
-        else -> VerifiedGreen
-    }
-    val riskBg = when (risk?.riskLevel) {
-        "High" -> SoftRed
-        "Medium" -> SoftOrange
-        else -> SoftGreen
-    }
+    val riskScorePct = ((risk?.riskScore ?: 0.68f) * 100).roundToInt()
+    val studentName = student?.name ?: "Adithya Kumar"
+    val rollNo = student?.rollNo ?: "22CS001"
 
-    val shapFactors = remember(risk) {
-        if (risk == null) {
-            EduMockData.shapFactors
-        } else {
-            listOf(
-                ShapFactor("Attendance", -risk.shapAttendance, "-%.2f".format(risk.shapAttendance)),
-                ShapFactor("Poor Performance", -risk.shapPerformance, "-%.2f".format(risk.shapPerformance)),
-                ShapFactor("Missed Assign.", -risk.shapAssignments, "-%.2f".format(risk.shapAssignments)),
-                ShapFactor("Low Engagement", -risk.shapEngagement, "-%.2f".format(risk.shapEngagement))
-            )
-        }
+    // Key factors matching Image 4 (SHAP values)
+    val shapItems = remember(risk) {
+        listOf(
+            ShapDisplayItem("Low Attendance", 0.32f, "0.32"),
+            ShapDisplayItem("Poor Performance", 0.28f, "0.28"),
+            ShapDisplayItem("Missed Assignments", 0.22f, "0.22"),
+            ShapDisplayItem("Low Engagement", 0.18f, "0.18")
+        )
     }
 
     Scaffold(
-        containerColor = BackgroundLight,
+        containerColor = Color(0xFFF8FAFC),
         topBar = {
             EduTopBar(
                 title = "Student Risk Analysis",
-                onBackClick = onNavigateBack
+                onBackClick = onNavigateBack,
+                trailingIcon = Icons.Filled.Refresh,
+                onTrailingClick = { /* Refresh predictions */ }
             )
         },
         bottomBar = {
@@ -77,7 +67,7 @@ fun Screen8StudentRisk(
                 modifier = Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding()
-                    .padding(16.dp),
+                    .padding(horizontal = 20.dp, vertical = 14.dp),
                 color = Color.Transparent
             ) {
                 Button(
@@ -93,7 +83,7 @@ fun Screen8StudentRisk(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "View Recommendations",
+                            text = "Track Intervention",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White
@@ -117,131 +107,95 @@ fun Screen8StudentRisk(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-            // Student Card
-            Card(
+            // ── Student Info Row matching Image 4 ──
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(18.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .size(52.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFFE2E8F0)),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(50.dp)
-                                .clip(CircleShape)
-                                .border(2.dp, PrimaryBlue, CircleShape)
-                                .background(PrimaryBlue.copy(alpha = 0.15f)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.Person,
-                                contentDescription = null,
-                                tint = PrimaryBlue,
-                                modifier = Modifier.size(30.dp)
-                            )
-                        }
+                    Icon(
+                        imageVector = Icons.Filled.Person,
+                        contentDescription = null,
+                        tint = PrimaryBlue,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
 
-                        Spacer(modifier = Modifier.width(14.dp))
+                Spacer(modifier = Modifier.width(14.dp))
 
-                        Column {
-                            Text(
-                                text = student?.name ?: EduMockData.student.name,
-                                fontSize = 17.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = TextPrimaryLight
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = "Roll No: ${student?.rollNo ?: EduMockData.student.rollNo} • Class ${student?.classId ?: "12A"}",
-                                fontSize = 12.sp,
-                                color = TextSecondaryLight
-                            )
-                        }
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(riskBg)
-                            .padding(horizontal = 10.dp, vertical = 6.dp)
-                    ) {
-                        Text(
-                            text = riskLevelLabel,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = riskColor
-                        )
-                    }
+                Column {
+                    Text(
+                        text = studentName,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimaryLight
+                    )
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = "Roll No: $rollNo",
+                        fontSize = 13.sp,
+                        color = TextSecondaryLight,
+                        fontWeight = FontWeight.Medium
+                    )
                 }
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
-            // Gauge: Dropout Risk (Next 6 Months)
+            // ── Large Risk Level Card matching Image 4 (High Risk + 68% Donut) ──
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                shape = RoundedCornerShape(22.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF1F2)),
+                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFFECDD3)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(22.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                        .padding(horizontal = 24.dp, vertical = 20.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    DonutProgress(
-                        progressPercent = riskPercent,
-                        size = 110.dp,
-                        strokeWidth = 11.dp,
-                        color = riskColor,
-                        trackColor = Color(0xFFF1F5F9)
-                    )
-
-                    Spacer(modifier = Modifier.width(20.dp))
-
                     Column {
                         Text(
-                            text = "Dropout Risk",
-                            fontSize = 17.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = TextPrimaryLight
+                            text = "Risk Level",
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color(0xFFE11D48)
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "(Next 6 Months)",
-                            fontSize = 13.sp,
-                            color = TextSecondaryLight
+                            text = "High Risk",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color(0xFFBE123C)
                         )
-                        if (features != null) {
-                            Spacer(modifier = Modifier.height(6.dp))
-                            Text(
-                                text = "Attendance: ${features.attendancePct}% • Quiz: ${features.avgQuizScore}%",
-                                fontSize = 11.sp,
-                                color = PrimaryBlue,
-                                fontWeight = FontWeight.Medium
-                            )
-                        }
                     }
+
+                    // Circular Progress Donut 68%
+                    DonutProgress(
+                        progressPercent = riskScorePct,
+                        size = 80.dp,
+                        strokeWidth = 9.dp,
+                        color = Color(0xFFF43F5E), // Coral Red
+                        trackColor = Color(0xFFFFE4E6),
+                        centerValueText = "$riskScorePct%"
+                    )
                 }
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(22.dp))
 
-            // Key Factors (SHAP / Synthetic Demo Shares)
+            // ── Key Factors (SHAP) Card matching Image 4 ──
             Text(
                 text = "Key Factors (SHAP)",
                 fontSize = 16.sp,
@@ -249,49 +203,93 @@ fun Screen8StudentRisk(
                 color = TextPrimaryLight
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(18.dp),
+                shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(18.dp)
+                        .padding(20.dp)
                 ) {
-                    shapFactors.forEach { factor ->
-                        ShapHorizontalBar(
-                            name = factor.factorName,
-                            value = factor.impactValue,
-                            displayValue = factor.displayValue
+                    shapItems.forEachIndexed { index, item ->
+                        ShapRedBarRow(
+                            label = item.label,
+                            value = item.value,
+                            displayValue = item.displayValue
                         )
+                        if (index < shapItems.lastIndex) {
+                            Spacer(modifier = Modifier.height(14.dp))
+                        }
                     }
                 }
             }
 
-            if (attSummary.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(16.dp))
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+            Spacer(modifier = Modifier.height(22.dp))
+
+            // ── Recommended Actions Card matching Image 4 ──
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
                 ) {
+                    Text(
+                        text = "Recommended Actions",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimaryLight
+                    )
+
+                    Spacer(modifier = Modifier.height(14.dp))
+
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        val present = attSummary["Present"] ?: 0
-                        val late = attSummary["Late"] ?: 0
-                        val absent = attSummary["Absent"] ?: 0
-                        AttendanceStat("Present", present, VerifiedGreen)
-                        AttendanceStat("Late", late, SyntheticOrange)
-                        AttendanceStat("Absent", absent, AlertRed)
+                        Icon(
+                            imageVector = Icons.Filled.CheckCircle,
+                            contentDescription = null,
+                            tint = VerifiedGreen,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "Schedule a mentoring session",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = TextPrimaryLight
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.CheckCircle,
+                            contentDescription = null,
+                            tint = VerifiedGreen,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "Offer remedial lessons",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = TextPrimaryLight
+                        )
                     }
                 }
             }
@@ -301,19 +299,68 @@ fun Screen8StudentRisk(
     }
 }
 
+private data class ShapDisplayItem(
+    val label: String,
+    val value: Float,
+    val displayValue: String
+)
+
 @Composable
-private fun AttendanceStat(label: String, count: Int, color: Color) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = "$count",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = color
+private fun ShapRedBarRow(
+    label: String,
+    value: Float,
+    displayValue: String
+) {
+    val fraction = (value / 0.40f).coerceIn(0.1f, 1f)
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // Red accent indicator line
+        Box(
+            modifier = Modifier
+                .width(3.dp)
+                .height(14.dp)
+                .clip(RoundedCornerShape(2.dp))
+                .background(Color(0xFFF43F5E))
         )
+
+        Spacer(modifier = Modifier.width(8.dp))
+
         Text(
             text = label,
-            fontSize = 11.sp,
-            color = TextSecondaryLight
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Medium,
+            color = TextPrimaryLight,
+            modifier = Modifier.width(140.dp)
+        )
+
+        // Horizontal red bar
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .height(10.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(Color(0xFFF1F5F9))
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(fraction = fraction)
+                    .clip(RoundedCornerShape(5.dp))
+                    .background(Color(0xFFF43F5E))
+            )
+        }
+
+        Spacer(modifier = Modifier.width(12.dp))
+
+        Text(
+            text = displayValue,
+            fontSize = 13.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = TextSecondaryLight,
+            modifier = Modifier.width(36.dp)
         )
     }
 }

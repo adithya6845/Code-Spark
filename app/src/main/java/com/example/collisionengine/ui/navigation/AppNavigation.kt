@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.collisionengine.data.edusuccess.EduDataRepository
 import com.example.collisionengine.ui.edusuccess.*
 
 @Composable
@@ -43,10 +44,11 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
             composable(route = Screen.EduSignIn.route) {
                 Screen2SignIn(
                     onSignInSuccess = { role ->
+                        EduDataRepository.activeUserRole = role
                         when (role) {
                             "Student" -> navController.navigate(Screen.EduStudentHome.route)
                             "Teacher" -> navController.navigate(Screen.EduClassroomAnalytics.route)
-                            "Counsellor" -> navController.navigate(Screen.EduStudentRisk.route)
+                            "Counsellor" -> navController.navigate(Screen.EduInterventionCopilot.route)
                             else -> navController.navigate(Screen.EduStudentHome.route)
                         }
                     },

@@ -46,6 +46,11 @@ object EduDataRepository {
     /** Active student/class selection shared across screens (defaults to demo student S0001). */
     var selectedStudentId by mutableStateOf("S0001")
     var selectedClassId by mutableStateOf("12A")
+    var activeUserRole by mutableStateOf("Student")
+    var targetAssignmentId by mutableStateOf<String?>("A01")
+
+    /** Dynamic list of teacher-assigned assignments, displayed on student dashboard. */
+    val teacherAssignedList = mutableStateListOf<TeacherAssignedTask>()
 
     /** Latest live OCR + AI Grading result used to update Overall Progress & Learning Path after OCR check. */
     var lastOcrAnalysis by mutableStateOf<AiSubmissionAnalysis?>(null)
@@ -163,6 +168,36 @@ object EduDataRepository {
                     conceptId = cols.getOrNull(7) ?: "",
                     maxMarks = cols.getOrNull(8)?.toFloatOrNull() ?: 5f,
                     dueDate = cols.getOrNull(9) ?: ""
+                )
+            }
+            if (teacherAssignedList.isEmpty()) {
+                teacherAssignedList.addAll(
+                    listOf(
+                        TeacherAssignedTask(
+                            assignmentId = "A01",
+                            title = "A01: Algebra Basics & Linear Equations",
+                            conceptId = "C01",
+                            subject = "Mathematics",
+                            maxMarks = 5f,
+                            dueDate = "Tomorrow, 5:00 PM",
+                            question = "Solve 3x + 7 = 25 and verify your answer by substitution.",
+                            referenceAnswer = "Step 1: Subtract 7: 3x = 18. Step 2: Divide by 3: x = 6. Verification: 3(6) + 7 = 18 + 7 = 25. LHS = RHS (Verified!).",
+                            assignedBy = "Ms. Sharma",
+                            assignedTimestamp = "Yesterday"
+                        ),
+                        TeacherAssignedTask(
+                            assignmentId = "A02",
+                            title = "A02: Matrices & Determinants Problem Set",
+                            conceptId = "C05",
+                            subject = "Mathematics",
+                            maxMarks = 5f,
+                            dueDate = "Friday, 11:59 PM",
+                            question = "Compute determinant of 3x3 matrix and solve system of linear equations.",
+                            referenceAnswer = "Expansion along Row 1 with cofactors, determinant = 0.",
+                            assignedBy = "Ms. Sharma",
+                            assignedTimestamp = "2 days ago"
+                        )
+                    )
                 )
             }
             _rubrics = parseCsv(appContext, "rubrics.csv") { cols ->
@@ -381,6 +416,50 @@ object EduDataRepository {
             )
         )
         return subId
+    }
+
+    /**
+     * Creates a new assignment by Teacher (Ms. Sharma) and publishes it for all students.
+     * Instantly updates reactive Compose state so students see it on their dashboard.
+     */
+    fun createAssignment(
+        title: String,
+        subject: String,
+        conceptId: String,
+        question: String,
+        referenceAnswer: String = "Complete step-by-step verified derivation required.",
+        maxMarks: Float = 5f,
+        dueDate: String = "Tomorrow, 5:00 PM"
+    ): TeacherAssignedTask {
+        val newId = "A%02d".format(_assignments.size + teacherAssignedList.size + 1)
+        val task = TeacherAssignedTask(
+            assignmentId = newId,
+            title = title,
+            conceptId = conceptId,
+            subject = subject,
+            maxMarks = maxMarks,
+            dueDate = dueDate,
+            question = question,
+            referenceAnswer = referenceAnswer,
+            assignedBy = "Ms. Sharma",
+            assignedTimestamp = "Just now"
+        )
+        teacherAssignedList.add(0, task)
+        val row = AssignmentRow(
+            assignmentId = newId,
+            assignmentTitle = title,
+            questionNo = 1,
+            subject = subject,
+            question = question,
+            referenceAnswer = referenceAnswer,
+            rubricId = "R_GENERIC",
+            conceptId = conceptId,
+            maxMarks = maxMarks,
+            dueDate = dueDate
+        )
+        _assignments = listOf(row) + _assignments
+        targetAssignmentId = newId
+        return task
     }
 
     fun getAssignmentItems(assignmentId: String): List<AssignmentRow> =
@@ -638,6 +717,19 @@ data class VoiceSessionRow(
     val durationMin: Int,
     val misconceptionsDetected: Int,
     val asrConfidence: Float
+)
+
+data class TeacherAssignedTask(
+    val assignmentId: String,
+    val title: String,
+    val conceptId: String,
+    val subject: String,
+    val maxMarks: Float,
+    val dueDate: String,
+    val question: String,
+    val referenceAnswer: String = "Complete step-by-step verified derivation required.",
+    val assignedBy: String = "Ms. Sharma",
+    val assignedTimestamp: String = "Today, 10:30 AM"
 )
 
 data class AssignmentRow(

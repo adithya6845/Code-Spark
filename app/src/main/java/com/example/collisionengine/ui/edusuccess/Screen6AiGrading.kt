@@ -61,11 +61,11 @@ fun Screen6AiGrading(
     var activeTab by remember { mutableStateOf("OCR Result") } // "OCR Result" | "Grading Report"
     var showApiKeyDialog by remember { mutableStateOf(false) }
 
-    val assignments = remember(isCoreLoaded) {
+    val assignments = remember(isCoreLoaded, EduDataRepository.assignments) {
         EduDataRepository.assignments.distinctBy { it.assignmentId }
     }
-    var selectedAssignmentId by remember(assignments) {
-        mutableStateOf(assignments.firstOrNull()?.assignmentId ?: "A01")
+    var selectedAssignmentId by remember(assignments, EduDataRepository.targetAssignmentId) {
+        mutableStateOf(EduDataRepository.targetAssignmentId ?: assignments.firstOrNull()?.assignmentId ?: "A01")
     }
     val selectedAssignment = remember(selectedAssignmentId, assignments) {
         assignments.find { it.assignmentId == selectedAssignmentId }
