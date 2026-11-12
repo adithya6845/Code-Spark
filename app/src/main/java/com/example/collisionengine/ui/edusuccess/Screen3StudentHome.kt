@@ -210,8 +210,8 @@ fun Screen3StudentHome(
                     onClick = onNavigateToEduVoice
                 )
                 QuickAccessItem(
-                    title = "Quizzes",
-                    icon = Icons.Filled.SportsEsports,
+                    title = "Upload & Grade",
+                    icon = Icons.Filled.UploadFile,
                     bgColor = Color(0xFFF0FDF4),
                     iconColor = VerifiedGreen,
                     onClick = onNavigateToQuizzes

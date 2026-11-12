@@ -3,11 +3,8 @@ package com.example.collisionengine.data.edusuccess
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Typeface
 import android.net.Uri
+import android.provider.OpenableColumns
 import android.util.Base64
 import com.example.collisionengine.BuildConfig
 import kotlinx.coroutines.Dispatchers
@@ -21,8 +18,17 @@ import java.net.URL
 
 data class StepVerdict(
     val step: String,
-    val isCorrect: Boolean,
-    val explanation: String
+    val status: String, // "Correct" | "Partial" | "Wrong"
+    val explanation: String,
+    val yStartFraction: Float = 0.1f,
+    val yEndFraction: Float = 0.25f
+) {
+    val isCorrect: Boolean get() = status.equals("Correct", ignoreCase = true)
+}
+
+data class UploadedFileMeta(
+    val fileName: String,
+    val sizeText: String
 )
 
 data class AiSubmissionAnalysis(
@@ -30,9 +36,14 @@ data class AiSubmissionAnalysis(
     val ocrObservations: String,
     val score: Float,
     val maxMarks: Float,
+    val scorePercent: Int,
+    val correctMarks: Float,
+    val partialMarks: Float,
+    val wrongMarks: Float,
     val verdict: String,
     val strongPoints: List<String>,
     val weakPoints: List<String>,
+    val weakConcepts: List<String>,
     val stepVerdicts: List<StepVerdict>,
     val summaryFeedback: String,
     val ocrModelUsed: String = "meta/llama-3.2-11b-vision-instruct",
@@ -41,17 +52,47 @@ data class AiSubmissionAnalysis(
 
 /**
  * Two-stage Student Assignment OCR & Grading pipeline:
- * 1) Llama 3.2 Vision Instruct (NVIDIA NIM) extracts handwritten work and OCR corrections.
- * 2) OpenAI GPT evaluates correctness against the assignment question, rubric, and reference answer,
- *    producing score, correct/wrong step breakdown, strong points, and weak points.
+ * 1) Llama 3.2 Vision Instruct (NVIDIA NIM) extracts handwritten work, OCR lines, and region locations.
+ * 2) OpenAI GPT evaluates Correct / Partial / Wrong marks, strong points, weak points, and weak concepts.
  */
 object AssignmentAiGrader {
 
-    private fun nvidiaKey(): String =
-        BuildConfig.NVIDIA_API_KEY.ifBlank { System.getenv("NVIDIA_API_KEY") ?: "" }
+    private const val PREFS_NAME = "edusuccess_ai_keys"
+    private const val KEY_NVIDIA = "nvidia_api_key"
+    private const val KEY_OPENAI = "openai_api_key"
 
-    private fun openAiKey(): String =
-        BuildConfig.OPENAI_API_KEY.ifBlank { System.getenv("OPENAI_API_KEY") ?: "" }
+    fun getNvidiaKey(context: Context): String {
+        val saved = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getString(KEY_NVIDIA, null)?.trim()
+        return saved?.takeIf { it.isNotBlank() }
+            ?: BuildConfig.NVIDIA_API_KEY.ifBlank { System.getenv("NVIDIA_API_KEY") ?: "" }
+    }
+
+    fun getOpenAiKey(context: Context): String {
+        val saved = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getString(KEY_OPENAI, null)?.trim()
+        return saved?.takeIf { it.isNotBlank() }
+            ?: BuildConfig.OPENAI_API_KEY.ifBlank { System.getenv("OPENAI_API_KEY") ?: "" }
+    }
+
+    fun saveApiKeys(context: Context, nvidiaKey: String, openAiKey: String) {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit().apply {
+            if (nvidiaKey.isNotBlank()) putString(KEY_NVIDIA, nvidiaKey.trim()) else remove(KEY_NVIDIA)
+            if (openAiKey.isNotBlank()) putString(KEY_OPENAI, openAiKey.trim()) else remove(KEY_OPENAI)
+            apply()
+        }
+    }
+
+    fun loadSampleAssignmentBitmap(context: Context): Bitmap? {
+        return try {
+            context.assets.open("sample_a01_assignment.jpg").use { stream ->
+                BitmapFactory.decodeStream(stream)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 
     fun loadBitmapFromUri(context: Context, uri: Uri): Bitmap? {
         return try {
@@ -64,66 +105,31 @@ object AssignmentAiGrader {
         }
     }
 
-    /** Generates a realistic handwritten-style lined-paper bitmap for testing OCR end-to-end. */
-    fun createSampleHandwrittenSheetBitmap(assignment: AssignmentRow?): Bitmap {
-        val width = 960
-        val height = 620
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        canvas.drawColor(Color.parseColor("#FCFCFA"))
+    fun readFileMeta(context: Context, uri: Uri): UploadedFileMeta {
+        var name = "Math_Assignment.jpg"
+        var sizeBytes = -1L
+        try {
+            context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+                val nameIdx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                val sizeIdx = cursor.getColumnIndex(OpenableColumns.SIZE)
+                if (cursor.moveToFirst()) {
+                    if (nameIdx >= 0) {
+                        cursor.getString(nameIdx)?.takeIf { it.isNotBlank() }?.let { name = it }
+                    }
+                    if (sizeIdx >= 0) {
+                        sizeBytes = cursor.getLong(sizeIdx)
+                    }
+                }
+            }
+        } catch (_: Exception) { }
 
-        val linePaint = Paint().apply {
-            color = Color.parseColor("#DCE6F2")
-            strokeWidth = 2f
+        val sizeText = when {
+            sizeBytes >= 1024 * 1024 -> "%.1f MB".format(sizeBytes / (1024f * 1024f))
+            sizeBytes >= 1024 -> "${sizeBytes / 1024} KB"
+            sizeBytes > 0 -> "$sizeBytes B"
+            else -> "Uploaded"
         }
-        for (y in 90..height step 68) {
-            canvas.drawLine(0f, y.toFloat(), width.toFloat(), y.toFloat(), linePaint)
-        }
-        val marginPaint = Paint().apply {
-            color = Color.parseColor("#F5B7B1")
-            strokeWidth = 3f
-        }
-        canvas.drawLine(85f, 0f, 85f, height.toFloat(), marginPaint)
-
-        val titlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.parseColor("#1E3A8A")
-            textSize = 28f
-            typeface = Typeface.create(Typeface.SERIF, Typeface.BOLD_ITALIC)
-        }
-        val inkPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.parseColor("#1E293B")
-            textSize = 34f
-            typeface = Typeface.create(Typeface.SERIF, Typeface.ITALIC)
-        }
-
-        val id = assignment?.assignmentId ?: "A01"
-        canvas.drawText("Assignment $id - Student Work", 110f, 65f, titlePaint)
-
-        val lines = when (assignment?.conceptId) {
-            "C01" -> listOf(
-                "Q: Solve 3x + 7 = 25",
-                "Step 1: 3x = 25 - 7 = 18",
-                "Step 2: x = 18 / 3 = 6",
-                "Check: 3(6) + 7 = 25 (Done)"
-            )
-            "C04", "C05", "C06" -> listOf(
-                "Q: Find |A| for A = [[2, 3], [1, 4]]",
-                "Step 1: |A| = (2)(4) + (3)(1)",
-                "Step 2: |A| = 8 + 3 = 11",
-                "Ans: Determinant = 11"
-            )
-            else -> listOf(
-                "Q: x^2 - 7x + 12 = 0",
-                "Step 1: x^2 - 3x - 4x + 12 = 0",
-                "Step 2: (x - 3)(x - 4) = 0",
-                "Step 3: x = 3, -4  (sign slip)"
-            )
-        }
-
-        lines.forEachIndexed { idx, line ->
-            canvas.drawText(line, 110f, 150f + idx * 96f, inkPaint)
-        }
-        return bitmap
+        return UploadedFileMeta(fileName = name, sizeText = sizeText)
     }
 
     private fun bitmapToBase64Jpeg(bitmap: Bitmap): String {
@@ -145,32 +151,35 @@ object AssignmentAiGrader {
     }
 
     /**
-     * Step 1: Call meta/llama-3.2-11b-vision-instruct on NVIDIA NIM to transcribe handwritten steps
-     * and identify OCR corrections, strong points, and weak points directly from the image.
+     * Step 1: Call meta/llama-3.2-11b-vision-instruct on NVIDIA NIM to extract all handwritten lines,
+     * approximate vertical positions (0.0 top to 1.0 bottom), and OCR corrections/observations.
      */
     suspend fun runLlamaVisionOcr(
+        context: Context,
         bitmap: Bitmap,
-        assignment: AssignmentRow,
+        assignment: AssignmentRow?,
         studentNotes: String
     ): Result<Pair<String, String>> = withContext(Dispatchers.IO) {
-        val key = nvidiaKey()
+        val key = getNvidiaKey(context)
         if (key.isBlank()) {
-            return@withContext Result.failure(IllegalStateException("NVIDIA_API_KEY is not configured in local.properties"))
+            return@withContext Result.failure(IllegalStateException("NVIDIA Llama 3.2 Vision API key is missing. Tap the key icon to add it."))
         }
 
         try {
             val base64Img = bitmapToBase64Jpeg(bitmap)
             val promptText = buildString {
-                append("You are an educational OCR & math-vision assistant. ")
-                append("Read the student's uploaded handwritten assignment image carefully.\n")
-                append("Question: ${assignment.question}\n")
-                if (studentNotes.isNotBlank()) {
-                    append("Student extra note: $studentNotes\n")
+                append("You are an educational OCR & handwriting vision expert.\n")
+                append("Read every line of the student's uploaded assignment image from top to bottom.\n")
+                if (assignment != null) {
+                    append("Expected Assignment (${assignment.assignmentId}): ${assignment.question}\n")
                 }
-                append("Return ONLY valid JSON with two string fields:\n")
+                if (studentNotes.isNotBlank()) {
+                    append("Student note: $studentNotes\n")
+                }
+                append("Respond strictly with valid JSON containing:\n")
                 append("{\n")
-                append("  \"transcription\": \"verbatim step-by-step math/text seen in the image\",\n")
-                append("  \"ocr_observations\": \"handwriting clarity, normalized notation corrections, and initial strong/weak observations\"\n")
+                append("  \"transcription\": \"exact multi-line transcription including line numbers and approximate vertical position [0.00-1.00] for each equation/step\",\n")
+                append("  \"ocr_observations\": \"handwriting clarity, any arithmetic/algebra slips or notation corrections spotted directly in the image\"\n")
                 append("}")
             }
 
@@ -192,7 +201,7 @@ object AssignmentAiGrader {
                             .put("content", contentArray)
                     )
                 )
-                .put("max_tokens", 600)
+                .put("max_tokens", 700)
                 .put("temperature", 0.2)
 
             val conn = (URL("https://integrate.api.nvidia.com/v1/chat/completions").openConnection() as HttpURLConnection).apply {
@@ -232,47 +241,57 @@ object AssignmentAiGrader {
     }
 
     /**
-     * Step 2: Use OpenAI GPT to check correct/wrong answers against the reference solution & rubric,
-     * assign marks, and extract clear Strong Points and Weak Points.
+     * Step 2: Evaluate OCR text with OpenAI GPT to determine Correct / Partial / Wrong marks,
+     * Strong Points, Weak Points, Weak Concepts, and step bounding fractions.
      */
     suspend fun gradeWithOpenAi(
-        assignment: AssignmentRow,
+        context: Context,
+        assignment: AssignmentRow?,
         rubrics: List<RubricRow>,
         ocrTranscription: String,
         ocrObservations: String
     ): Result<AiSubmissionAnalysis> = withContext(Dispatchers.IO) {
-        val key = openAiKey()
+        val key = getOpenAiKey(context)
         if (key.isBlank()) {
-            return@withContext Result.failure(IllegalStateException("OPENAI_API_KEY is not configured in local.properties"))
+            return@withContext Result.failure(IllegalStateException("OpenAI API key is missing. Tap the key icon to add it."))
         }
 
+        val maxMarks = assignment?.maxMarks ?: 5f
         val rubricText = if (rubrics.isEmpty()) {
-            "Method & Accuracy: ${assignment.maxMarks} marks total"
+            "Method, Calculation Accuracy, Final Answer: $maxMarks marks total"
         } else {
             rubrics.joinToString("\n") { "- ${it.criterion} (${it.maxMarks} marks): ${it.description}" }
         }
 
         val systemPrompt = """
-            You are an expert Mathematics and Physics teacher grading a student's OCR-scanned assignment.
-            Compare the student's transcribed solution against the official question, reference answer, and rubric.
-            Identify exact strong points (what the student got right) and weak points (mistakes/misconceptions),
-            verify each step as Correct or Wrong, and compute a fair score out of max_marks.
+            You are an expert AI teacher grading a student's OCR-scanned handwritten assignment.
+            Analyze the OCR transcription line by line against the assignment question, reference answer, and rubric.
+            Identify exact Strong Points (what is right), Weak Points (errors/slips/gaps), Weak Concepts,
+            and classify each step as "Correct", "Partial", or "Wrong" with approximate normalized vertical position
+            (y_start and y_end in 0.0..1.0 from top to bottom of the page).
+            Also split the marks out of $maxMarks into: correct_marks, partial_marks, wrong_marks (where total earned score = correct_marks + partial_marks, and wrong_marks = marks lost due to mistakes).
             Respond strictly with valid JSON matching this schema:
             {
               "score": number,
+              "correct_marks": number,
+              "partial_marks": number,
+              "wrong_marks": number,
               "verdict": "Correct" | "Partially Correct" | "Incorrect",
               "strong_points": ["..."],
               "weak_points": ["..."],
-              "step_verdicts": [{"step": "...", "is_correct": true|false, "explanation": "..."}],
-              "summary_feedback": "concise actionable teacher feedback"
+              "weak_concepts": ["..."],
+              "step_verdicts": [
+                {"step": "...", "status": "Correct" | "Partial" | "Wrong", "explanation": "...", "y_start": 0.15, "y_end": 0.30}
+              ],
+              "summary_feedback": "concise teacher feedback"
             }
         """.trimIndent()
 
         val userPrompt = """
-            Subject: ${assignment.subject}
-            Question: ${assignment.question}
-            Reference Answer: ${assignment.referenceAnswer}
-            Max Marks: ${assignment.maxMarks}
+            Assignment: ${assignment?.assignmentTitle ?: "Uploaded Assignment"} (${assignment?.subject ?: "Mathematics"})
+            Question: ${assignment?.question ?: "Grade the problem written in the uploaded sheet"}
+            Reference Answer: ${assignment?.referenceAnswer ?: "Verify mathematically from the sheet itself"}
+            Max Marks: $maxMarks
             Rubric:
             $rubricText
 
@@ -283,9 +302,8 @@ object AssignmentAiGrader {
             $ocrObservations
         """.trimIndent()
 
-        // Try modern OpenAI models in order in case an account doesn't have one alias enabled
         val candidateModels = listOf("gpt-4o", "gpt-4o-mini", "gpt-4.1")
-        var lastError: String = "OpenAI request failed"
+        var lastError = "OpenAI request failed"
 
         for (modelName in candidateModels) {
             try {
@@ -299,7 +317,7 @@ object AssignmentAiGrader {
                     )
                     .put("response_format", JSONObject().put("type", "json_object"))
                     .put("temperature", 0.2)
-                    .put("max_tokens", 700)
+                    .put("max_tokens", 850)
 
                 val conn = (URL("https://api.openai.com/v1/chat/completions").openConnection() as HttpURLConnection).apply {
                     requestMethod = "POST"
@@ -332,39 +350,60 @@ object AssignmentAiGrader {
                     .trim()
 
                 val json = parseJsonLoose(rawContent) ?: JSONObject()
-                val score = json.optDouble("score", 0.0).toFloat().coerceIn(0f, assignment.maxMarks)
+                val score = json.optDouble("score", 0.0).toFloat().coerceIn(0f, maxMarks)
+                val correctMarks = json.optDouble("correct_marks", score.toDouble()).toFloat().coerceIn(0f, maxMarks)
+                val partialMarks = json.optDouble("partial_marks", 0.0).toFloat().coerceIn(0f, maxMarks)
+                val wrongMarks = json.optDouble("wrong_marks", (maxMarks - score).toDouble()).toFloat().coerceIn(0f, maxMarks)
+                val pct = if (maxMarks > 0f) ((score / maxMarks) * 100f).toInt().coerceIn(0, 100) else 0
+
                 val verdict = json.optString("verdict", "Partially Correct")
                 val strong = jsonArrayToList(json.optJSONArray("strong_points"))
                 val weak = jsonArrayToList(json.optJSONArray("weak_points"))
+                val defaultConcept = assignment?.conceptId?.let { EduDataRepository.getConceptById(it)?.topic }
+                    ?: assignment?.subject
+                    ?: "Algebra"
+                val weakConcepts = jsonArrayToList(json.optJSONArray("weak_concepts"))
+                    .ifEmpty { if (weak.isNotEmpty()) listOf(defaultConcept) else emptyList() }
+
                 val stepsJson = json.optJSONArray("step_verdicts")
                 val steps = mutableListOf<StepVerdict>()
                 if (stepsJson != null) {
+                    val total = stepsJson.length().coerceAtLeast(1)
                     for (i in 0 until stepsJson.length()) {
                         val obj = stepsJson.optJSONObject(i) ?: continue
+                        val fallbackStart = 0.14f + (i.toFloat() / total) * 0.72f
+                        val fallbackEnd = (fallbackStart + (0.72f / total) * 0.85f).coerceAtMost(0.96f)
+                        val yStart = obj.optDouble("y_start", fallbackStart.toDouble()).toFloat().coerceIn(0.05f, 0.90f)
+                        val yEnd = obj.optDouble("y_end", fallbackEnd.toDouble()).toFloat().coerceIn(yStart + 0.05f, 0.98f)
                         steps.add(
                             StepVerdict(
                                 step = obj.optString("step", "Step ${i + 1}"),
-                                isCorrect = obj.optBoolean("is_correct", false),
-                                explanation = obj.optString("explanation", "")
+                                status = obj.optString("status", if (obj.optBoolean("is_correct", true)) "Correct" else "Wrong"),
+                                explanation = obj.optString("explanation", ""),
+                                yStartFraction = yStart,
+                                yEndFraction = yEnd
                             )
                         )
                     }
                 }
-                val summary = json.optString("summary_feedback", "")
-                    .ifBlank { "Graded against ${assignment.assignmentTitle} rubric." }
 
-                val conceptTopic = EduDataRepository.getConceptById(assignment.conceptId)?.topic
-                    ?: assignment.subject
+                val summary = json.optString("summary_feedback", "")
+                    .ifBlank { "Analyzed via Llama 3.2 Vision OCR + $modelName." }
 
                 return@withContext Result.success(
                     AiSubmissionAnalysis(
                         ocrTranscription = ocrTranscription,
                         ocrObservations = ocrObservations,
                         score = score,
-                        maxMarks = assignment.maxMarks,
+                        maxMarks = maxMarks,
+                        scorePercent = pct,
+                        correctMarks = correctMarks,
+                        partialMarks = partialMarks,
+                        wrongMarks = wrongMarks,
                         verdict = verdict,
-                        strongPoints = strong.ifEmpty { listOf("Attempted structured solution steps") },
+                        strongPoints = strong.ifEmpty { listOf("Clear step-by-step mathematical setup") },
                         weakPoints = weak,
+                        weakConcepts = weakConcepts,
                         stepVerdicts = steps,
                         summaryFeedback = summary,
                         gradingModelUsed = modelName
@@ -405,4 +444,3 @@ object AssignmentAiGrader {
         return list
     }
 }
-
