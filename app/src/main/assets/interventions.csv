@@ -1,0 +1,155 @@
+intervention_id,student_id,risk_level,risk_score_at_start,recommendation,created_on,assigned_to,status,follow_up_date,outcome,risk_score_after
+INT0001,S0001,High,0.68,Schedule academic check-in; mentoring session + remedial lessons on Matrices & Determinants,2026-11-12,Mr. Ramesh Rao,Scheduled,2026-11-19,Pending,
+INT0002,S0002,High,0.94,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-21,Mr. Ramesh Rao,Completed,2026-10-05,Improved,0.72
+INT0003,S0005,High,0.8,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-22,Ms. Kavya Iyer,In Progress,2026-11-05,Pending,
+INT0004,S0006,High,0.94,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-26,Ms. Kavya Iyer,In Progress,2026-11-09,Pending,
+INT0005,S0008,Medium,0.37,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-17,Mr. Ramesh Rao,Completed,2026-10-31,Improved,0.2
+INT0006,S0016,High,0.74,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-09-25,Mr. Ramesh Rao,Completed,2026-10-09,No Change,0.75
+INT0007,S0017,Medium,0.31,Hold parent/guardian meeting about attendance,2026-10-07,Mr. Ramesh Rao,Completed,2026-10-21,Improved,0.05
+INT0008,S0018,High,0.71,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-17,Mr. Ramesh Rao,Completed,2026-10-31,Improved,0.52
+INT0009,S0020,High,0.67,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-09,Mr. Ramesh Rao,Completed,2026-10-23,Improved,0.39
+INT0010,S0022,Medium,0.48,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-06,Mr. Ramesh Rao,Completed,2026-10-20,Improved,0.29
+INT0011,S0024,Medium,0.31,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-28,Ms. Kavya Iyer,In Progress,2026-11-11,Pending,
+INT0012,S0027,High,0.65,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-24,Mr. Ramesh Rao,Completed,2026-10-08,Improved,0.48
+INT0013,S0028,Medium,0.32,Hold parent/guardian meeting about attendance,2026-10-30,Ms. Kavya Iyer,In Progress,2026-11-13,Pending,
+INT0014,S0029,Medium,0.41,Set a deadline plan with a peer mentor,2026-09-25,Ms. Kavya Iyer,Completed,2026-10-09,Improved,0.25
+INT0015,S0030,Medium,0.5,Hold parent/guardian meeting about attendance,2026-10-17,Mr. Ramesh Rao,Completed,2026-10-31,Improved,0.3
+INT0016,S0033,High,0.85,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-09-30,Mr. Ramesh Rao,Completed,2026-10-14,Improved,0.62
+INT0017,S0034,High,0.92,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-23,Ms. Kavya Iyer,Completed,2026-10-07,No Change,0.96
+INT0018,S0037,High,0.83,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-28,Mr. Ramesh Rao,In Progress,2026-11-11,Pending,
+INT0019,S0038,High,0.79,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-04,Mr. Ramesh Rao,Completed,2026-10-18,No Change,0.79
+INT0020,S0039,Medium,0.35,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-05,Ms. Kavya Iyer,Completed,2026-10-19,Improved,0.19
+INT0021,S0043,High,0.63,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-15,Mr. Ramesh Rao,Completed,2026-10-29,Improved,0.4
+INT0022,S0046,High,0.86,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-24,Ms. Kavya Iyer,In Progress,2026-11-07,Pending,
+INT0023,S0047,Medium,0.39,Set a deadline plan with a peer mentor,2026-10-11,Ms. Kavya Iyer,Completed,2026-10-25,No Change,0.4
+INT0024,S0049,Medium,0.48,Set a deadline plan with a peer mentor,2026-10-21,Mr. Ramesh Rao,Completed,2026-11-04,Improved,0.31
+INT0025,S0053,High,0.82,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-07,Mr. Ramesh Rao,Completed,2026-10-21,Escalated,0.81
+INT0026,S0054,Medium,0.3,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-09-24,Ms. Kavya Iyer,Completed,2026-10-08,No Change,0.28
+INT0027,S0056,Medium,0.54,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-19,Mr. Ramesh Rao,Completed,2026-11-02,Improved,0.29
+INT0028,S0059,High,0.6,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-09-27,Mr. Ramesh Rao,Completed,2026-10-11,Improved,0.33
+INT0029,S0061,High,0.9,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-26,Ms. Kavya Iyer,In Progress,2026-11-09,Pending,
+INT0030,S0064,Medium,0.34,Daily EduVoice nudges and weekly mentor check-in,2026-10-20,Ms. Kavya Iyer,Completed,2026-11-03,No Change,0.38
+INT0031,S0067,High,0.72,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-11-05,Ms. Kavya Iyer,In Progress,2026-11-19,Pending,
+INT0032,S0068,High,0.71,Daily EduVoice nudges and weekly mentor check-in; counsellor 1:1 session,2026-09-24,Mr. Ramesh Rao,Completed,2026-10-08,No Change,0.69
+INT0033,S0071,High,0.72,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-20,Mr. Ramesh Rao,Completed,2026-11-03,Improved,0.54
+INT0034,S0072,Medium,0.37,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-09-22,Mr. Ramesh Rao,Completed,2026-10-06,No Change,0.37
+INT0035,S0073,High,0.67,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-11-05,Mr. Ramesh Rao,In Progress,2026-11-19,Pending,
+INT0036,S0077,High,0.69,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-09-25,Ms. Kavya Iyer,Completed,2026-10-09,Improved,0.41
+INT0037,S0078,High,0.81,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-21,Mr. Ramesh Rao,Completed,2026-11-04,No Change,0.79
+INT0038,S0080,High,0.85,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-28,Mr. Ramesh Rao,In Progress,2026-11-11,Pending,
+INT0039,S0083,High,0.95,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-31,Ms. Kavya Iyer,In Progress,2026-11-14,Pending,
+INT0040,S0084,High,0.83,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-31,Ms. Kavya Iyer,In Progress,2026-11-14,Pending,
+INT0041,S0085,High,0.89,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-02,Mr. Ramesh Rao,Completed,2026-10-16,Improved,0.61
+INT0042,S0087,Medium,0.32,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-11,Ms. Kavya Iyer,Completed,2026-10-25,Improved,0.16
+INT0043,S0092,Medium,0.44,Set a deadline plan with a peer mentor,2026-10-02,Mr. Ramesh Rao,Completed,2026-10-16,Improved,0.27
+INT0044,S0095,High,0.81,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-10,Ms. Kavya Iyer,Completed,2026-10-24,Improved,0.6
+INT0045,S0096,High,0.86,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-18,Ms. Kavya Iyer,Completed,2026-11-01,No Change,0.86
+INT0046,S0097,High,0.77,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-03,Mr. Ramesh Rao,Completed,2026-10-17,No Change,0.78
+INT0047,S0098,Medium,0.55,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-09-26,Ms. Kavya Iyer,Completed,2026-10-10,Improved,0.26
+INT0048,S0100,High,0.87,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-19,Ms. Kavya Iyer,Completed,2026-11-02,No Change,0.91
+INT0049,S0101,Medium,0.52,Hold parent/guardian meeting about attendance,2026-11-02,Ms. Kavya Iyer,In Progress,2026-11-16,Pending,
+INT0050,S0103,Medium,0.49,Set a deadline plan with a peer mentor,2026-10-04,Ms. Kavya Iyer,Completed,2026-10-18,Improved,0.34
+INT0051,S0105,Medium,0.55,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-06,Mr. Ramesh Rao,Completed,2026-10-20,Improved,0.38
+INT0052,S0106,Medium,0.42,Daily EduVoice nudges and weekly mentor check-in,2026-09-24,Ms. Kavya Iyer,Completed,2026-10-08,Improved,0.13
+INT0053,S0107,Medium,0.58,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-02,Mr. Ramesh Rao,Completed,2026-10-16,Improved,0.34
+INT0054,S0108,Medium,0.32,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-01,Ms. Kavya Iyer,Completed,2026-10-15,Improved,0.04
+INT0055,S0109,High,0.6,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-09-22,Ms. Kavya Iyer,Completed,2026-10-06,No Change,0.59
+INT0056,S0110,High,0.96,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-24,Mr. Ramesh Rao,Completed,2026-10-08,Improved,0.79
+INT0057,S0111,High,0.75,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-13,Ms. Kavya Iyer,Completed,2026-10-27,Improved,0.46
+INT0058,S0112,High,0.65,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-28,Ms. Kavya Iyer,Completed,2026-10-12,Improved,0.41
+INT0059,S0113,Medium,0.48,Daily EduVoice nudges and weekly mentor check-in,2026-09-26,Mr. Ramesh Rao,Completed,2026-10-10,Improved,0.26
+INT0060,S0114,High,0.64,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-17,Mr. Ramesh Rao,Completed,2026-10-31,Improved,0.4
+INT0061,S0115,Medium,0.37,Hold parent/guardian meeting about attendance,2026-09-22,Ms. Kavya Iyer,Completed,2026-10-06,Improved,0.07
+INT0062,S0116,Medium,0.53,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-26,Mr. Ramesh Rao,In Progress,2026-11-09,Pending,
+INT0063,S0120,Medium,0.37,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-09,Ms. Kavya Iyer,Completed,2026-10-23,Improved,0.17
+INT0064,S0121,High,0.78,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-18,Ms. Kavya Iyer,Completed,2026-11-01,Improved,0.51
+INT0065,S0123,Medium,0.46,Daily EduVoice nudges and weekly mentor check-in,2026-10-10,Ms. Kavya Iyer,Completed,2026-10-24,Escalated,0.49
+INT0066,S0124,Medium,0.44,Hold parent/guardian meeting about attendance,2026-09-24,Mr. Ramesh Rao,Completed,2026-10-08,Escalated,0.43
+INT0067,S0129,High,0.89,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-27,Ms. Kavya Iyer,In Progress,2026-11-10,Pending,
+INT0068,S0130,High,0.62,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-12,Mr. Ramesh Rao,Completed,2026-10-26,No Change,0.67
+INT0069,S0133,Medium,0.33,Hold parent/guardian meeting about attendance,2026-10-24,Mr. Ramesh Rao,In Progress,2026-11-07,Pending,
+INT0070,S0134,High,0.77,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-22,Mr. Ramesh Rao,Completed,2026-10-06,No Change,0.77
+INT0071,S0135,High,0.69,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-09-24,Ms. Kavya Iyer,Completed,2026-10-08,No Change,0.68
+INT0072,S0136,High,0.92,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-26,Mr. Ramesh Rao,Completed,2026-10-10,Improved,0.65
+INT0073,S0137,Medium,0.44,Hold parent/guardian meeting about attendance,2026-11-01,Ms. Kavya Iyer,In Progress,2026-11-15,Pending,
+INT0074,S0138,High,0.74,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-11-04,Mr. Ramesh Rao,In Progress,2026-11-18,Pending,
+INT0075,S0142,High,0.63,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-11-01,Mr. Ramesh Rao,In Progress,2026-11-15,Pending,
+INT0076,S0143,High,0.79,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-09-20,Mr. Ramesh Rao,Completed,2026-10-04,Escalated,0.78
+INT0077,S0145,High,0.82,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-27,Ms. Kavya Iyer,In Progress,2026-11-10,Pending,
+INT0078,S0146,High,0.72,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-22,Ms. Kavya Iyer,In Progress,2026-11-05,Pending,
+INT0079,S0148,Medium,0.46,Hold parent/guardian meeting about attendance,2026-11-04,Mr. Ramesh Rao,In Progress,2026-11-18,Pending,
+INT0080,S0151,Medium,0.56,Hold parent/guardian meeting about attendance,2026-09-29,Ms. Kavya Iyer,Completed,2026-10-13,Improved,0.29
+INT0081,S0153,Medium,0.45,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-04,Mr. Ramesh Rao,Completed,2026-10-18,Escalated,0.48
+INT0082,S0155,Medium,0.54,Hold parent/guardian meeting about attendance,2026-09-24,Mr. Ramesh Rao,Completed,2026-10-08,Escalated,0.58
+INT0083,S0160,High,0.87,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-09-22,Mr. Ramesh Rao,Completed,2026-10-06,Escalated,0.92
+INT0084,S0162,High,0.75,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-11-02,Ms. Kavya Iyer,In Progress,2026-11-16,Pending,
+INT0085,S0164,High,0.95,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-08,Ms. Kavya Iyer,Completed,2026-10-22,Improved,0.72
+INT0086,S0165,Medium,0.43,Hold parent/guardian meeting about attendance,2026-09-24,Mr. Ramesh Rao,Completed,2026-10-08,Improved,0.19
+INT0087,S0171,High,0.66,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-28,Ms. Kavya Iyer,In Progress,2026-11-11,Pending,
+INT0088,S0172,Medium,0.49,Hold parent/guardian meeting about attendance,2026-09-27,Ms. Kavya Iyer,Completed,2026-10-11,Improved,0.27
+INT0089,S0173,Medium,0.57,Hold parent/guardian meeting about attendance,2026-10-13,Mr. Ramesh Rao,Completed,2026-10-27,Improved,0.35
+INT0090,S0174,Medium,0.42,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-01,Ms. Kavya Iyer,Completed,2026-10-15,No Change,0.4
+INT0091,S0178,High,0.76,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-20,Mr. Ramesh Rao,Completed,2026-10-04,Improved,0.54
+INT0092,S0183,Medium,0.38,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-19,Ms. Kavya Iyer,Completed,2026-11-02,Improved,0.15
+INT0093,S0185,Medium,0.33,Hold parent/guardian meeting about attendance,2026-10-23,Mr. Ramesh Rao,In Progress,2026-11-06,Pending,
+INT0094,S0187,High,0.61,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-26,Mr. Ramesh Rao,In Progress,2026-11-09,Pending,
+INT0095,S0188,High,0.91,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-05,Ms. Kavya Iyer,Completed,2026-10-19,No Change,0.94
+INT0096,S0189,High,0.93,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-09-21,Mr. Ramesh Rao,Completed,2026-10-05,Improved,0.68
+INT0097,S0193,Medium,0.55,Hold parent/guardian meeting about attendance,2026-11-04,Mr. Ramesh Rao,In Progress,2026-11-18,Pending,
+INT0098,S0195,High,0.68,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-19,Mr. Ramesh Rao,Completed,2026-11-02,Improved,0.47
+INT0099,S0197,Medium,0.59,Hold parent/guardian meeting about attendance,2026-10-21,Ms. Kavya Iyer,Completed,2026-11-04,Improved,0.41
+INT0100,S0198,Medium,0.54,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-27,Ms. Kavya Iyer,In Progress,2026-11-10,Pending,
+INT0101,S0199,High,0.82,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-06,Mr. Ramesh Rao,Completed,2026-10-20,No Change,0.83
+INT0102,S0200,High,0.65,Daily EduVoice nudges and weekly mentor check-in; counsellor 1:1 session,2026-10-10,Ms. Kavya Iyer,Completed,2026-10-24,No Change,0.63
+INT0103,S0203,Medium,0.49,Set a deadline plan with a peer mentor,2026-09-28,Ms. Kavya Iyer,Completed,2026-10-12,No Change,0.48
+INT0104,S0204,High,0.75,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-23,Mr. Ramesh Rao,Completed,2026-10-07,Improved,0.52
+INT0105,S0205,High,0.97,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-29,Ms. Kavya Iyer,Completed,2026-10-13,Improved,0.71
+INT0106,S0206,Medium,0.51,Daily EduVoice nudges and weekly mentor check-in,2026-09-21,Ms. Kavya Iyer,Completed,2026-10-05,No Change,0.55
+INT0107,S0208,Medium,0.57,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-29,Mr. Ramesh Rao,In Progress,2026-11-12,Pending,
+INT0108,S0209,High,0.7,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-20,Mr. Ramesh Rao,Completed,2026-11-03,Escalated,0.75
+INT0109,S0211,Medium,0.43,Daily EduVoice nudges and weekly mentor check-in,2026-10-19,Ms. Kavya Iyer,Completed,2026-11-02,Improved,0.16
+INT0110,S0212,High,0.78,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-09-28,Ms. Kavya Iyer,Completed,2026-10-12,Improved,0.49
+INT0111,S0213,Medium,0.41,Daily EduVoice nudges and weekly mentor check-in,2026-10-17,Mr. Ramesh Rao,Completed,2026-10-31,Improved,0.18
+INT0112,S0214,Medium,0.58,Set a deadline plan with a peer mentor,2026-09-25,Ms. Kavya Iyer,Completed,2026-10-09,Improved,0.4
+INT0113,S0222,Medium,0.53,Hold parent/guardian meeting about attendance,2026-10-13,Ms. Kavya Iyer,Completed,2026-10-27,No Change,0.57
+INT0114,S0224,High,0.8,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-08,Mr. Ramesh Rao,Completed,2026-10-22,Improved,0.59
+INT0115,S0226,Medium,0.38,Daily EduVoice nudges and weekly mentor check-in,2026-09-27,Ms. Kavya Iyer,Completed,2026-10-11,Improved,0.12
+INT0116,S0229,High,0.62,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-08,Ms. Kavya Iyer,Completed,2026-10-22,Improved,0.42
+INT0117,S0231,High,0.88,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-07,Mr. Ramesh Rao,Completed,2026-10-21,Improved,0.71
+INT0118,S0232,Medium,0.57,Daily EduVoice nudges and weekly mentor check-in,2026-10-18,Mr. Ramesh Rao,Completed,2026-11-01,Improved,0.28
+INT0119,S0235,High,0.7,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-08,Mr. Ramesh Rao,Completed,2026-10-22,Escalated,0.7
+INT0120,S0236,Medium,0.36,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-09-27,Mr. Ramesh Rao,Completed,2026-10-11,Improved,0.19
+INT0121,S0237,High,0.95,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-11-05,Mr. Ramesh Rao,In Progress,2026-11-19,Pending,
+INT0122,S0239,High,0.92,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-09,Mr. Ramesh Rao,Completed,2026-10-23,Improved,0.72
+INT0123,S0241,High,0.97,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-24,Ms. Kavya Iyer,In Progress,2026-11-07,Pending,
+INT0124,S0242,High,0.73,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-15,Ms. Kavya Iyer,Completed,2026-10-29,No Change,0.76
+INT0125,S0243,High,0.84,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-09-30,Ms. Kavya Iyer,Completed,2026-10-14,Escalated,0.85
+INT0126,S0244,High,0.93,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-04,Mr. Ramesh Rao,Completed,2026-10-18,No Change,0.91
+INT0127,S0246,High,0.8,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-06,Mr. Ramesh Rao,Completed,2026-10-20,No Change,0.84
+INT0128,S0248,Medium,0.34,Daily EduVoice nudges and weekly mentor check-in,2026-11-03,Mr. Ramesh Rao,In Progress,2026-11-17,Pending,
+INT0129,S0250,Medium,0.52,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-11-02,Ms. Kavya Iyer,In Progress,2026-11-16,Pending,
+INT0130,S0251,High,0.68,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-23,Ms. Kavya Iyer,In Progress,2026-11-06,Pending,
+INT0131,S0254,Medium,0.38,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-10-17,Mr. Ramesh Rao,Completed,2026-10-31,No Change,0.36
+INT0132,S0258,High,0.77,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-12,Mr. Ramesh Rao,Completed,2026-10-26,Improved,0.58
+INT0133,S0259,High,0.73,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-24,Mr. Ramesh Rao,In Progress,2026-11-07,Pending,
+INT0134,S0260,High,0.9,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-20,Ms. Kavya Iyer,Completed,2026-11-03,Improved,0.73
+INT0135,S0261,Medium,0.52,Hold parent/guardian meeting about attendance,2026-10-18,Ms. Kavya Iyer,Completed,2026-11-01,Improved,0.34
+INT0136,S0264,High,0.76,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-10,Ms. Kavya Iyer,Completed,2026-10-24,Improved,0.51
+INT0137,S0271,High,0.9,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-03,Ms. Kavya Iyer,Completed,2026-10-17,Improved,0.69
+INT0138,S0276,High,0.84,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-11-05,Mr. Ramesh Rao,In Progress,2026-11-19,Pending,
+INT0139,S0277,Medium,0.39,Assign remedial lessons on weak concepts + EduVoice tutoring,2026-09-21,Ms. Kavya Iyer,Completed,2026-10-05,No Change,0.38
+INT0140,S0280,Medium,0.39,Set a deadline plan with a peer mentor,2026-09-22,Ms. Kavya Iyer,Completed,2026-10-06,No Change,0.37
+INT0141,S0281,High,0.7,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-28,Mr. Ramesh Rao,Completed,2026-10-12,Improved,0.46
+INT0142,S0282,High,0.87,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-26,Mr. Ramesh Rao,In Progress,2026-11-09,Pending,
+INT0143,S0283,Medium,0.43,Hold parent/guardian meeting about attendance,2026-10-13,Mr. Ramesh Rao,Completed,2026-10-27,Improved,0.24
+INT0144,S0285,High,0.66,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-24,Mr. Ramesh Rao,In Progress,2026-11-07,Pending,
+INT0145,S0287,Medium,0.56,Hold parent/guardian meeting about attendance,2026-10-06,Ms. Kavya Iyer,Completed,2026-10-20,Improved,0.28
+INT0146,S0288,High,0.64,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-12,Ms. Kavya Iyer,Completed,2026-10-26,Improved,0.48
+INT0147,S0291,High,0.85,Set a deadline plan with a peer mentor; counsellor 1:1 session,2026-10-06,Mr. Ramesh Rao,Completed,2026-10-20,Improved,0.66
+INT0148,S0292,Medium,0.43,Set a deadline plan with a peer mentor,2026-11-02,Mr. Ramesh Rao,In Progress,2026-11-16,Pending,
+INT0149,S0294,High,0.96,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-15,Ms. Kavya Iyer,Completed,2026-10-29,Improved,0.81
+INT0150,S0295,High,0.67,Daily EduVoice nudges and weekly mentor check-in; counsellor 1:1 session,2026-10-23,Mr. Ramesh Rao,In Progress,2026-11-06,Pending,
+INT0151,S0296,High,0.61,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-09-20,Mr. Ramesh Rao,Completed,2026-10-04,Escalated,0.66
+INT0152,S0297,High,0.62,Hold parent/guardian meeting about attendance; counsellor 1:1 session,2026-10-19,Mr. Ramesh Rao,Completed,2026-11-02,No Change,0.64
+INT0153,S0299,High,0.88,Assign remedial lessons on weak concepts + EduVoice tutoring; counsellor 1:1 session,2026-10-09,Ms. Kavya Iyer,Completed,2026-10-23,Escalated,0.92
+INT0154,S0300,Medium,0.56,Set a deadline plan with a peer mentor,2026-10-27,Ms. Kavya Iyer,In Progress,2026-11-10,Pending,

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>EduVoice AI - ElevenLabs Teacher Agent</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #081225;
+      color: #F8FAFC;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+    .container {
+      width: 100%;
+      min-height: 100%;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 210, 255, 0.12);
+      border: 1px solid rgba(0, 210, 255, 0.35);
+      font-size: 12px;
+      font-weight: 600;
+      color: #00D2FF;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(1.25); }
+    }
+    .hint {
+      font-size: 13px;
+      color: #94A3B8;
+      text-align: center;
+      max-width: 300px;
+      line-height: 1.4;
+    }
+    .widget-host {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      position: relative;
+    }
+    .offline-msg {
+      display: none;
+      margin-top: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #FCA5A5;
+      font-size: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="status-badge">
+      <span class="dot"></span>
+      <span id="statusText">Connecting ElevenLabs Teacher Agent...</span>
+    </div>
+    <p class="hint" id="hintText">
+      Tap the voice widget below to start speaking with your AI Teacher.
+    </p>
+    <div class="widget-host">
+      <elevenlabs-convai
+        agent-id="agent_8501m77a52nce89t2r2xc2v7ytry"
+        variant="expanded"
+      ></elevenlabs-convai>
+    </div>
+    <div class="offline-msg" id="offlineMsg">
+      Could not load ElevenLabs widget script. Please verify internet access and microphone permission.
+    </div>
+  </div>
+
+  <script
+    src="https://unpkg.com/@elevenlabs/convai-widget-embed"
+    async
+    type="text/javascript"
+    onload="document.getElementById('statusText').textContent='ElevenLabs Teacher Agent Ready';"
+    onerror="document.getElementById('statusText').textContent='Offline / Script Unavailable'; document.getElementById('offlineMsg').style.display='block';"
+  ></script>
+</body>
+</html>
+

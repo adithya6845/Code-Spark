@@ -1,0 +1,36 @@
+# Android / Gradle build outputs
+*.iml
+.gradle/
+app/.gradle/
+.idea/
+app/.idea/
+build/
+app/build/
+captures/
+.externalNativeBuild
+.cxx/
+local.properties
+app/local.properties
+*.apk
+*.aab
+*.dex
+*.class
+
+# Python / FastAPI
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.env
+backend campus/.env
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+
+# Temporary & Log files
+*.log

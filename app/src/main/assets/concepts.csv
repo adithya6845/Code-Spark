@@ -1,0 +1,19 @@
+concept_id,topic,subject,unit,prerequisite_id,grade_level
+C01,Linear Equations,Mathematics,Algebra,,11
+C02,Quadratic Equations,Mathematics,Algebra,C01,11
+C03,Functions & Graphs,Mathematics,Algebra,C01,11
+C04,Matrices Basics,Mathematics,Matrices & Determinants,C01,12
+C05,Matrix Operations,Mathematics,Matrices & Determinants,C04,12
+C06,Determinants,Mathematics,Matrices & Determinants,C05,12
+C07,Matrix Inverse,Mathematics,Matrices & Determinants,C06,12
+C08,Probability Basics,Mathematics,Probability,,11
+C09,Conditional Probability,Mathematics,Probability,C08,12
+C10,Limits,Mathematics,Calculus,C03,11
+C11,Differentiation,Mathematics,Calculus,C10,11
+C12,Applications of Derivatives,Mathematics,Calculus,C11,12
+C13,Integration Basics,Mathematics,Calculus,C11,12
+C14,Kinematics,Physics,Mechanics,C01,11
+C15,Newton's Laws of Motion,Physics,Mechanics,C14,11
+C16,"Work, Energy & Power",Physics,Mechanics,C15,11
+C17,Current Electricity,Physics,Electricity,,12
+C18,Ohm's Law & Circuits,Physics,Electricity,C17,12

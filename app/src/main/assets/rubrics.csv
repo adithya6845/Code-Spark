@@ -1,0 +1,8 @@
+rubric_id,subject,criterion,max_marks,description
+R_MATH,Mathematics,Method & Steps,2.0,Correct approach with logical working shown
+R_MATH,Mathematics,Calculation Accuracy,2.0,Arithmetic/algebra free of errors; partial credit for single slips
+R_MATH,Mathematics,Final Answer & Presentation,1.0,"Correct final answer, clearly stated"
+R_PHY,Physics,Formula / Principle,1.5,Correct law or formula identified
+R_PHY,Physics,Substitution with Units,1.5,Values substituted correctly with units
+R_PHY,Physics,Calculation,1.5,Correct numerical working
+R_PHY,Physics,Final Answer with Unit,0.5,Correct answer with correct SI unit

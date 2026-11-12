@@ -1,0 +1,211 @@
+question_id,concept_id,subject,difficulty,difficulty_level,question_type,question,option_a,option_b,option_c,option_d,correct_option,correct_answer,distractor_misconceptions
+Q001,C01,Mathematics,Easy,1,MCQ,Solve for x: 2x + 6 = 8,7,-2,1,2,C,1,A:sign_error_transposing; B:divided_before_moving_constant; D:forgot_to_divide_by_coefficient
+Q002,C01,Mathematics,Easy,1,MCQ,Solve for x: 3x + 1 = 19,16/3,20/3,18,6,D,6,A:divided_before_moving_constant; B:sign_error_transposing; C:forgot_to_divide_by_coefficient
+Q003,C01,Mathematics,Easy,1,MCQ,Solve for x: 3x + 5 = 11,16/3,-4/3,6,2,D,2,A:sign_error_transposing; B:divided_before_moving_constant; C:forgot_to_divide_by_coefficient
+Q004,C01,Mathematics,Easy,1,MCQ,Solve for x: 5x + 4 = 14,18/5,-6/5,2,10,C,2,A:sign_error_transposing; B:divided_before_moving_constant; D:forgot_to_divide_by_coefficient
+Q005,C01,Mathematics,Medium,2,MCQ,Solve for x: 7x + 6 = 55,61/7,13/7,7,49,C,7,A:sign_error_transposing; B:divided_before_moving_constant; D:forgot_to_divide_by_coefficient
+Q006,C01,Mathematics,Medium,2,MCQ,Solve for x: 4x + 2 = 10,8,3,2,1/2,C,2,A:forgot_to_divide_by_coefficient; B:sign_error_transposing; D:divided_before_moving_constant
+Q007,C01,Mathematics,Medium,2,MCQ,Solve for x: 4x + 1 = 21,11/2,5,20,17/4,B,5,A:sign_error_transposing; C:forgot_to_divide_by_coefficient; D:divided_before_moving_constant
+Q008,C01,Mathematics,Medium,2,MCQ,Solve for x: 5x + 9 = 19,2,28/5,-26/5,10,A,2,B:sign_error_transposing; C:divided_before_moving_constant; D:forgot_to_divide_by_coefficient
+Q009,C01,Mathematics,Hard,3,MCQ,Solve for x: 5x + 1 = 11,10,2,6/5,12/5,B,2,A:forgot_to_divide_by_coefficient; C:divided_before_moving_constant; D:sign_error_transposing
+Q010,C01,Mathematics,Hard,3,MCQ,Solve for x: 5x + 7 = 17,2,-18/5,24/5,10,A,2,B:divided_before_moving_constant; C:sign_error_transposing; D:forgot_to_divide_by_coefficient
+Q011,C01,Mathematics,Hard,3,MCQ,Solve for x: 4x + 6 = 30,6,3/2,24,9,A,6,B:divided_before_moving_constant; C:forgot_to_divide_by_coefficient; D:sign_error_transposing
+Q012,C01,Mathematics,Hard,3,MCQ,Solve for x: 3x + 11 = 41,8/3,10,30,52/3,B,10,A:divided_before_moving_constant; C:forgot_to_divide_by_coefficient; D:sign_error_transposing
+Q013,C02,Mathematics,Easy,1,MCQ,Find the roots of x^2 - 6x + 8 = 0 (smaller root first),"6,8","2,4","-4,-2","2,2",B,"2,4",A:confused_coefficients_with_roots; C:sign_error_roots; D:repeated_root_assumed
+Q014,C02,Mathematics,Easy,1,MCQ,Find the roots of x^2 - 4x + 3 = 0 (smaller root first),"4,3","1,1","1,3","-3,-1",C,"1,3",A:confused_coefficients_with_roots; B:repeated_root_assumed; D:sign_error_roots
+Q015,C02,Mathematics,Easy,1,MCQ,Find the roots of x^2 - 7x + 12 = 0 (smaller root first),"7,12","-4,-3","3,3","3,4",D,"3,4",A:confused_coefficients_with_roots; B:sign_error_roots; C:repeated_root_assumed
+Q016,C02,Mathematics,Easy,1,MCQ,Find the roots of x^2 - 9x + 20 = 0 (smaller root first),"9,20","4,5","4,4","-5,-4",B,"4,5",A:confused_coefficients_with_roots; C:repeated_root_assumed; D:sign_error_roots
+Q017,C02,Mathematics,Medium,2,MCQ,Find the roots of x^2 - 8x + 12 = 0 (smaller root first),"2,6","-6,-2","2,2","8,12",A,"2,6",B:sign_error_roots; C:repeated_root_assumed; D:confused_coefficients_with_roots
+Q018,C02,Mathematics,Medium,2,MCQ,Find the roots of x^2 - 9x + 20 = 0 (smaller root first),"-5,-4","4,4","4,5","9,20",C,"4,5",A:sign_error_roots; B:repeated_root_assumed; D:confused_coefficients_with_roots
+Q019,C02,Mathematics,Medium,2,MCQ,Find the roots of x^2 - 8x + 7 = 0 (smaller root first),"-7,-1","8,7","1,1","1,7",D,"1,7",A:sign_error_roots; B:confused_coefficients_with_roots; C:repeated_root_assumed
+Q020,C02,Mathematics,Medium,2,MCQ,Find the roots of x^2 - 13x + 42 = 0 (smaller root first),"-7,-6","6,7","13,42","6,6",B,"6,7",A:sign_error_roots; C:confused_coefficients_with_roots; D:repeated_root_assumed
+Q021,C02,Mathematics,Hard,3,MCQ,Find the roots of x^2 - 16x + 63 = 0 (smaller root first),"7,9","-9,-7","16,63","7,7",A,"7,9",B:sign_error_roots; C:confused_coefficients_with_roots; D:repeated_root_assumed
+Q022,C02,Mathematics,Hard,3,MCQ,Find the roots of x^2 - 10x + 9 = 0 (smaller root first),"1,1","-9,-1","10,9","1,9",D,"1,9",A:repeated_root_assumed; B:sign_error_roots; C:confused_coefficients_with_roots
+Q023,C02,Mathematics,Hard,3,MCQ,Find the roots of x^2 - 8x + 12 = 0 (smaller root first),"2,2","2,6","-6,-2","8,12",B,"2,6",A:repeated_root_assumed; C:sign_error_roots; D:confused_coefficients_with_roots
+Q024,C02,Mathematics,Hard,3,MCQ,Find the roots of x^2 - 9x + 8 = 0 (smaller root first),"-8,-1","1,8","1,1","9,8",B,"1,8",A:sign_error_roots; C:repeated_root_assumed; D:confused_coefficients_with_roots
+Q025,C03,Mathematics,Easy,1,MCQ,"If f(x) = 2x + 6, find f(3)",18,0,12,11,C,12,A:bracket_error; B:sign_error; D:added_instead_of_multiplied
+Q026,C03,Mathematics,Easy,1,MCQ,"If f(x) = 3x - 5, find f(1)",8,-2,-1,-12,B,-2,A:sign_error; C:added_instead_of_multiplied; D:bracket_error
+Q027,C03,Mathematics,Easy,1,MCQ,"If f(x) = 2x + 3, find f(-2)",3,2,-7,-1,D,-1,A:added_instead_of_multiplied; B:bracket_error; C:sign_error
+Q028,C03,Mathematics,Easy,1,MCQ,"If f(x) = 2x - 5, find f(-2)",-5,-9,-14,1,B,-9,A:added_instead_of_multiplied; C:bracket_error; D:sign_error
+Q029,C03,Mathematics,Medium,2,MCQ,"If f(x) = 4x + 5, find f(0)",5,-5,20,9,A,5,B:sign_error; C:bracket_error; D:added_instead_of_multiplied
+Q030,C03,Mathematics,Medium,2,MCQ,"If f(x) = 5x + 6, find f(4)",15,50,26,14,C,26,A:added_instead_of_multiplied; B:bracket_error; D:sign_error
+Q031,C03,Mathematics,Medium,2,MCQ,"If f(x) = 3x + 1, find f(-3)",-10,-8,-6,1,B,-8,A:sign_error; C:bracket_error; D:added_instead_of_multiplied
+Q032,C03,Mathematics,Medium,2,MCQ,"If f(x) = 2x + 1, find f(-2)",-3,-2,-5,1,A,-3,B:bracket_error; C:sign_error; D:added_instead_of_multiplied
+Q033,C03,Mathematics,Hard,3,MCQ,"If f(x) = 3x - 5, find f(4)",7,-3,17,2,A,7,B:bracket_error; C:sign_error; D:added_instead_of_multiplied
+Q034,C03,Mathematics,Hard,3,MCQ,"If f(x) = 3x - 1, find f(3)",8,10,5,6,A,8,B:sign_error; C:added_instead_of_multiplied; D:bracket_error
+Q035,C03,Mathematics,Hard,3,MCQ,"If f(x) = 5x - 6, find f(-2)",-4,-40,-3,-16,D,-16,A:sign_error; B:bracket_error; C:added_instead_of_multiplied
+Q036,C03,Mathematics,Hard,3,MCQ,"If f(x) = 2x - 2, find f(0)",-4,0,-2,2,C,-2,A:bracket_error; B:added_instead_of_multiplied; D:sign_error
+Q037,C04,Mathematics,Easy,1,MCQ,How many elements does a 4x2 matrix have?,6,16,7,8,D,8,A:added_order; B:confused_rows_columns; C:off_by_one
+Q038,C04,Mathematics,Easy,1,MCQ,How many elements does a 3x4 matrix have?,7,11,12,9,C,12,A:added_order; B:off_by_one; D:confused_rows_columns
+Q039,C04,Mathematics,Easy,1,MCQ,How many elements does a 2x4 matrix have?,4,6,7,8,D,8,A:confused_rows_columns; B:added_order; C:off_by_one
+Q040,C04,Mathematics,Easy,1,MCQ,How many elements does a 4x3 matrix have?,16,11,12,7,C,12,A:confused_rows_columns; B:off_by_one; D:added_order
+Q041,C04,Mathematics,Medium,2,MCQ,How many elements does a 5x2 matrix have?,25,10,9,7,B,10,A:confused_rows_columns; C:off_by_one; D:added_order
+Q042,C04,Mathematics,Medium,2,MCQ,How many elements does a 2x5 matrix have?,4,10,7,9,B,10,A:confused_rows_columns; C:added_order; D:off_by_one
+Q043,C04,Mathematics,Medium,2,MCQ,How many elements does a 4x3 matrix have?,16,12,7,11,B,12,A:confused_rows_columns; C:added_order; D:off_by_one
+Q044,C04,Mathematics,Medium,2,MCQ,How many elements does a 4x5 matrix have?,9,16,20,19,C,20,A:added_order; B:confused_rows_columns; D:off_by_one
+Q045,C04,Mathematics,Hard,3,MCQ,How many elements does a 5x6 matrix have?,11,29,25,30,D,30,A:added_order; B:off_by_one; C:confused_rows_columns
+Q046,C04,Mathematics,Hard,3,MCQ,How many elements does a 6x4 matrix have?,23,24,36,10,B,24,A:off_by_one; C:confused_rows_columns; D:added_order
+Q047,C04,Mathematics,Hard,3,MCQ,How many elements does a 3x4 matrix have?,9,7,12,11,C,12,A:confused_rows_columns; B:added_order; D:off_by_one
+Q048,C04,Mathematics,Hard,3,MCQ,How many elements does a 2x6 matrix have?,8,12,4,11,B,12,A:added_order; C:confused_rows_columns; D:off_by_one
+Q049,C05,Mathematics,Easy,1,MCQ,"If A = [[1,2],[0,0]] and B = [[5,4],[1,2]], find A+B","[[-4,-2],[-1,-2]]","[[6,6],[1,2]]","[[7,6],[1,2]]","[[5,8],[0,0]]",B,"[[6,6],[1,2]]",A:subtracted_instead_of_added; C:arithmetic_slip; D:multiplied_entrywise
+Q050,C05,Mathematics,Easy,1,MCQ,"If A = [[5,2],[1,5]] and B = [[5,2],[4,3]], find A+B","[[0,0],[-3,2]]","[[11,4],[5,8]]","[[10,4],[5,8]]","[[25,4],[4,15]]",C,"[[10,4],[5,8]]",A:subtracted_instead_of_added; B:arithmetic_slip; D:multiplied_entrywise
+Q051,C05,Mathematics,Easy,1,MCQ,"If A = [[5,3],[2,0]] and B = [[0,2],[1,5]], find A+B","[[6,5],[3,5]]","[[5,1],[1,-5]]","[[5,5],[3,5]]","[[0,6],[2,0]]",C,"[[5,5],[3,5]]",A:arithmetic_slip; B:subtracted_instead_of_added; D:multiplied_entrywise
+Q052,C05,Mathematics,Easy,1,MCQ,"If A = [[4,5],[3,4]] and B = [[0,0],[0,5]], find A+B","[[5,5],[3,9]]","[[4,5],[3,9]]","[[0,0],[0,20]]","[[4,5],[3,-1]]",B,"[[4,5],[3,9]]",A:arithmetic_slip; C:multiplied_entrywise; D:subtracted_instead_of_added
+Q053,C05,Mathematics,Medium,2,MCQ,"If A = [[6,2],[4,4]] and B = [[1,3],[1,0]], find AB","[[9,18],[8,12]]","[[8,18],[8,12]]","[[18,14],[6,2]]","[[6,6],[4,0]]",B,"[[8,18],[8,12]]",A:arithmetic_slip; C:order_of_multiplication; D:multiplied_entrywise
+Q054,C05,Mathematics,Medium,2,MCQ,"If A = [[2,1],[5,1]] and B = [[5,0],[2,6]], find AB","[[10,5],[34,8]]","[[12,6],[27,6]]","[[10,0],[10,6]]","[[13,6],[27,6]]",B,"[[12,6],[27,6]]",A:order_of_multiplication; C:multiplied_entrywise; D:arithmetic_slip
+Q055,C05,Mathematics,Medium,2,MCQ,"If A = [[1,6],[1,6]] and B = [[6,1],[3,0]], find AB","[[24,1],[24,1]]","[[25,1],[24,1]]","[[6,6],[3,0]]","[[7,42],[3,18]]",A,"[[24,1],[24,1]]",B:arithmetic_slip; C:multiplied_entrywise; D:order_of_multiplication
+Q056,C05,Mathematics,Medium,2,MCQ,"If A = [[6,3],[6,5]] and B = [[6,5],[6,1]], find AB","[[66,43],[42,23]]","[[55,33],[66,35]]","[[54,33],[66,35]]","[[36,15],[36,5]]",C,"[[54,33],[66,35]]",A:order_of_multiplication; B:arithmetic_slip; D:multiplied_entrywise
+Q057,C05,Mathematics,Hard,3,MCQ,"If A = [[6,0],[7,3]] and B = [[3,7],[5,4]], find AB","[[19,42],[36,61]]","[[18,0],[35,12]]","[[18,42],[36,61]]","[[67,21],[58,12]]",C,"[[18,42],[36,61]]",A:arithmetic_slip; B:multiplied_entrywise; D:order_of_multiplication
+Q058,C05,Mathematics,Hard,3,MCQ,"If A = [[3,6],[5,4]] and B = [[1,4],[5,6]], find AB","[[23,22],[45,54]]","[[34,48],[25,44]]","[[33,48],[25,44]]","[[3,24],[25,24]]",C,"[[33,48],[25,44]]",A:order_of_multiplication; B:arithmetic_slip; D:multiplied_entrywise
+Q059,C05,Mathematics,Hard,3,MCQ,"If A = [[4,2],[4,0]] and B = [[1,6],[5,5]], find AB","[[28,2],[40,10]]","[[14,34],[4,24]]","[[4,12],[20,0]]","[[15,34],[4,24]]",B,"[[14,34],[4,24]]",A:order_of_multiplication; C:multiplied_entrywise; D:arithmetic_slip
+Q060,C05,Mathematics,Hard,3,MCQ,"If A = [[6,3],[4,0]] and B = [[6,0],[3,5]], find AB","[[36,0],[12,0]]","[[36,18],[38,9]]","[[45,15],[24,0]]","[[46,15],[24,0]]",C,"[[45,15],[24,0]]",A:multiplied_entrywise; B:order_of_multiplication; D:arithmetic_slip
+Q061,C06,Mathematics,Easy,1,MCQ,"Find |A| for A = [[5,3],[6,1]]",-13,23,5,27,A,-13,B:sign_error_formula; C:forgot_second_term; D:wrong_diagonals
+Q062,C06,Mathematics,Easy,1,MCQ,"Find |A| for A = [[6,4],[3,4]]",36,12,24,2,B,12,A:sign_error_formula; C:forgot_second_term; D:wrong_diagonals
+Q063,C06,Mathematics,Easy,1,MCQ,"Find |A| for A = [[2,4],[6,4]]",-16,8,-4,32,A,-16,B:forgot_second_term; C:wrong_diagonals; D:sign_error_formula
+Q064,C06,Mathematics,Easy,1,MCQ,"Find |A| for A = [[4,5],[1,3]]",12,17,7,-11,C,7,A:forgot_second_term; B:sign_error_formula; D:wrong_diagonals
+Q065,C06,Mathematics,Medium,2,MCQ,"Find |A| for A = [[4,8],[3,2]]",-16,32,8,-4,A,-16,B:sign_error_formula; C:forgot_second_term; D:wrong_diagonals
+Q066,C06,Mathematics,Medium,2,MCQ,"Find |A| for A = [[2,4],[5,4]]",8,-6,-12,28,C,-12,A:forgot_second_term; B:wrong_diagonals; D:sign_error_formula
+Q067,C06,Mathematics,Medium,2,MCQ,"Find |A| for A = [[1,4],[8,2]]",0,-30,34,2,B,-30,A:wrong_diagonals; C:sign_error_formula; D:forgot_second_term
+Q068,C06,Mathematics,Medium,2,MCQ,"Find |A| for A = [[7,8],[7,4]]",28,-28,17,84,B,-28,A:forgot_second_term; C:wrong_diagonals; D:sign_error_formula
+Q069,C06,Mathematics,Hard,3,MCQ,"If A = [[2,7],[4,3]], find |4A|",-88,544,-352,-1408,C,-352,A:scalar_multiplication_error; B:sign_error_formula; D:cubed_scalar
+Q070,C06,Mathematics,Hard,3,MCQ,"If A = [[2,8],[3,8]], find |4A|",-128,-512,-32,640,A,-128,B:cubed_scalar; C:scalar_multiplication_error; D:sign_error_formula
+Q071,C06,Mathematics,Hard,3,MCQ,"If A = [[9,8],[3,8]], find |3A|",1296,144,432,864,C,432,A:cubed_scalar; B:scalar_multiplication_error; D:sign_error_formula
+Q072,C06,Mathematics,Hard,3,MCQ,"If A = [[9,8],[4,5]], find |3A|",351,39,693,117,D,117,A:cubed_scalar; B:scalar_multiplication_error; C:sign_error_formula
+Q073,C07,Mathematics,Easy,1,MCQ,"Find the inverse of A = [[1,1],[2,3]] (note |A| = 1)","[[-3,1],[2,-1]]","[[3,-1],[-2,1]]","[[3,1],[2,1]]","[[1,-1],[-2,3]]",B,"[[3,-1],[-2,1]]",A:wrong_sign_pattern; C:forgot_sign_change; D:did_not_swap_diagonal
+Q074,C07,Mathematics,Easy,1,MCQ,"Find the inverse of A = [[1,1],[1,2]] (note |A| = 1)","[[1,-1],[-1,2]]","[[2,-1],[-1,1]]","[[-2,1],[1,-1]]","[[2,1],[1,1]]",B,"[[2,-1],[-1,1]]",A:did_not_swap_diagonal; C:wrong_sign_pattern; D:forgot_sign_change
+Q075,C07,Mathematics,Easy,1,MCQ,"Find the inverse of A = [[1,3],[1,4]] (note |A| = 1)","[[-4,3],[1,-1]]","[[1,-3],[-1,4]]","[[4,3],[1,1]]","[[4,-3],[-1,1]]",D,"[[4,-3],[-1,1]]",A:wrong_sign_pattern; B:did_not_swap_diagonal; C:forgot_sign_change
+Q076,C07,Mathematics,Easy,1,MCQ,"Find the inverse of A = [[1,2],[3,7]] (note |A| = 1)","[[1,-2],[-3,7]]","[[7,-2],[-3,1]]","[[7,2],[3,1]]","[[-7,2],[3,-1]]",B,"[[7,-2],[-3,1]]",A:did_not_swap_diagonal; C:forgot_sign_change; D:wrong_sign_pattern
+Q077,C07,Mathematics,Medium,2,MCQ,"If |A| = 3 for a 2x2 matrix A, find |A^-1|",-1/3,1/3,3,1/9,B,1/3,A:sign_error; C:forgot_inverse; D:squared_determinant
+Q078,C07,Mathematics,Medium,2,MCQ,"If |A| = 6 for a 2x2 matrix A, find |A^-1|",-1/6,1/6,6,1/36,B,1/6,A:sign_error; C:forgot_inverse; D:squared_determinant
+Q079,C07,Mathematics,Medium,2,MCQ,"If |A| = 4 for a 2x2 matrix A, find |A^-1|",1/4,1/16,4,-1/4,A,1/4,B:squared_determinant; C:forgot_inverse; D:sign_error
+Q080,C07,Mathematics,Medium,2,MCQ,"If |A| = 5 for a 2x2 matrix A, find |A^-1|",1/5,-1/5,1/25,5,A,1/5,B:sign_error; C:squared_determinant; D:forgot_inverse
+Q081,C07,Mathematics,Hard,3,MCQ,"If |A| = 5 for a 2x2 matrix A, find |2A^-1|",20,1/5,2/5,4/5,D,4/5,A:forgot_inverse; B:ignored_scalar; C:scalar_not_squared
+Q082,C07,Mathematics,Hard,3,MCQ,"If |A| = 3 for a 2x2 matrix A, find |2A^-1|",2/3,1/3,4/3,12,C,4/3,A:scalar_not_squared; B:ignored_scalar; D:forgot_inverse
+Q083,C07,Mathematics,Hard,3,MCQ,"If |A| = 6 for a 2x2 matrix A, find |2A^-1|",1/6,1/3,24,2/3,D,2/3,A:ignored_scalar; B:scalar_not_squared; C:forgot_inverse
+Q084,C07,Mathematics,Hard,3,MCQ,"If |A| = 2 for a 2x2 matrix A, find |2A^-1|",2,8,1,1/2,A,2,B:forgot_inverse; C:scalar_not_squared; D:ignored_scalar
+Q085,C08,Mathematics,Easy,1,MCQ,A fair die is rolled. Find P(multiple of 2),1/2,1/3,1/6,3/2,A,1/2,B:used_k_as_count; C:counted_single_outcome; D:wrong_denominator
+Q086,C08,Mathematics,Easy,1,MCQ,A fair die is rolled. Find P(multiple of 3),1/3,2/3,1/6,1/2,A,1/3,B:wrong_denominator; C:counted_single_outcome; D:used_k_as_count
+Q087,C08,Mathematics,Medium,2,MCQ,Two fair dice are thrown. Find P(sum = 4),1/12,1/11,1/4,1/36,A,1/12,B:sums_treated_as_equally_likely; C:wrong_sample_space; D:counted_one_outcome
+Q088,C08,Mathematics,Medium,2,MCQ,Two fair dice are thrown. Find P(sum = 9),1/9,1/11,1/36,1/3,A,1/9,B:sums_treated_as_equally_likely; C:counted_one_outcome; D:wrong_sample_space
+Q089,C08,Mathematics,Medium,2,MCQ,Two fair dice are thrown. Find P(sum = 10),1/11,1/36,1/4,1/12,D,1/12,A:sums_treated_as_equally_likely; B:counted_one_outcome; C:wrong_sample_space
+Q090,C08,Mathematics,Medium,2,MCQ,Two fair dice are thrown. Find P(sum = 8),1/11,1/36,5/36,5/12,C,5/36,A:sums_treated_as_equally_likely; B:counted_one_outcome; D:wrong_sample_space
+Q091,C08,Mathematics,Hard,3,MCQ,Two fair dice are thrown. Find P(sum = 6),1/36,1/11,5/12,5/36,D,5/36,A:counted_one_outcome; B:sums_treated_as_equally_likely; C:wrong_sample_space
+Q092,C08,Mathematics,Hard,3,MCQ,Two fair dice are thrown. Find P(sum = 3),1/18,1/6,1/36,1/11,A,1/18,B:wrong_sample_space; C:counted_one_outcome; D:sums_treated_as_equally_likely
+Q093,C08,Mathematics,Hard,3,MCQ,Two fair dice are thrown. Find P(sum = 7),1/6,1/36,1/2,1/11,A,1/6,B:counted_one_outcome; C:wrong_sample_space; D:sums_treated_as_equally_likely
+Q094,C08,Mathematics,Hard,3,MCQ,Two fair dice are thrown. Find P(sum = 10),1/36,1/4,1/11,1/12,D,1/12,A:counted_one_outcome; B:wrong_sample_space; C:sums_treated_as_equally_likely
+Q095,C09,Mathematics,Easy,1,MCQ,"If P(A and B) = 4/10 and P(B) = 6/10, find P(A|B)",3/2,2/3,2/5,6/25,B,2/3,A:inverted_conditional; C:ignored_condition; D:multiplied_probabilities
+Q096,C09,Mathematics,Easy,1,MCQ,"If P(A and B) = 2/10 and P(B) = 4/10, find P(A|B)",1/2,2,2/25,1/5,A,1/2,B:inverted_conditional; C:multiplied_probabilities; D:ignored_condition
+Q097,C09,Mathematics,Easy,1,MCQ,"If P(A and B) = 3/10 and P(B) = 6/10, find P(A|B)",2,1/2,9/50,3/10,B,1/2,A:inverted_conditional; C:multiplied_probabilities; D:ignored_condition
+Q098,C09,Mathematics,Easy,1,MCQ,"If P(A and B) = 4/10 and P(B) = 5/10, find P(A|B)",4/5,2/5,5/4,1/5,A,4/5,B:ignored_condition; C:inverted_conditional; D:multiplied_probabilities
+Q099,C09,Mathematics,Medium,2,MCQ,"If P(A and B) = 1/10 and P(B) = 5/10, find P(A|B)",1/10,5,1/20,1/5,D,1/5,A:ignored_condition; B:inverted_conditional; C:multiplied_probabilities
+Q100,C09,Mathematics,Medium,2,MCQ,"If P(A and B) = 4/10 and P(B) = 5/10, find P(A|B)",4/5,2/5,1/5,5/4,A,4/5,B:ignored_condition; C:multiplied_probabilities; D:inverted_conditional
+Q101,C09,Mathematics,Medium,2,MCQ,"If P(A and B) = 5/10 and P(B) = 9/10, find P(A|B)",9/5,9/20,5/9,1/2,C,5/9,A:inverted_conditional; B:multiplied_probabilities; D:ignored_condition
+Q102,C09,Mathematics,Medium,2,MCQ,"If P(A and B) = 3/10 and P(B) = 8/10, find P(A|B)",3/8,6/25,3/10,8/3,A,3/8,B:multiplied_probabilities; C:ignored_condition; D:inverted_conditional
+Q103,C09,Mathematics,Hard,3,MCQ,"If P(A and B) = 1/10 and P(B) = 2/10, find P(A|B)",1/10,1/2,1/50,2,B,1/2,A:ignored_condition; C:multiplied_probabilities; D:inverted_conditional
+Q104,C09,Mathematics,Hard,3,MCQ,"If P(A and B) = 4/10 and P(B) = 6/10, find P(A|B)",6/25,2/5,2/3,3/2,C,2/3,A:multiplied_probabilities; B:ignored_condition; D:inverted_conditional
+Q105,C09,Mathematics,Hard,3,MCQ,"If P(A and B) = 1/10 and P(B) = 4/10, find P(A|B)",1/4,4,1/25,1/10,A,1/4,B:inverted_conditional; C:multiplied_probabilities; D:ignored_condition
+Q106,C09,Mathematics,Hard,3,MCQ,"If P(A and B) = 4/10 and P(B) = 8/10, find P(A|B)",2,1/2,8/25,2/5,B,1/2,A:inverted_conditional; C:multiplied_probabilities; D:ignored_condition
+Q107,C10,Mathematics,Easy,1,MCQ,Evaluate lim(x->4) (x^2 - 16)/(x - 4),16,8,4,0,B,8,A:squared_a; C:took_limit_of_x_only; D:substituted_directly_0_over_0
+Q108,C10,Mathematics,Easy,1,MCQ,Evaluate lim(x->3) (x^2 - 9)/(x - 3),6,3,0,9,A,6,B:took_limit_of_x_only; C:substituted_directly_0_over_0; D:squared_a
+Q109,C10,Mathematics,Medium,2,MCQ,Evaluate lim(x->4) (x^2 - 16)/(x - 4),0,16,4,8,D,8,A:substituted_directly_0_over_0; B:squared_a; C:took_limit_of_x_only
+Q110,C10,Mathematics,Medium,2,MCQ,Evaluate lim(x->5) (x^2 - 25)/(x - 5),5,0,25,10,D,10,A:took_limit_of_x_only; B:substituted_directly_0_over_0; C:squared_a
+Q111,C10,Mathematics,Medium,2,MCQ,Evaluate lim(x->3) (x^2 - 9)/(x - 3),9,6,3,0,B,6,A:squared_a; C:took_limit_of_x_only; D:substituted_directly_0_over_0
+Q112,C10,Mathematics,Hard,3,MCQ,Evaluate lim(x->4) (x^3 - 64)/(x - 4),0,12,16,48,D,48,A:substituted_directly_0_over_0; B:derivative_power_error; C:dropped_factor
+Q113,C10,Mathematics,Hard,3,MCQ,Evaluate lim(x->2) (x^3 - 8)/(x - 2),12,6,4,0,A,12,B:derivative_power_error; C:dropped_factor; D:substituted_directly_0_over_0
+Q114,C10,Mathematics,Hard,3,MCQ,Evaluate lim(x->6) (x^3 - 216)/(x - 6),0,18,108,36,C,108,A:substituted_directly_0_over_0; B:derivative_power_error; D:dropped_factor
+Q115,C10,Mathematics,Hard,3,MCQ,Evaluate lim(x->5) (x^3 - 125)/(x - 5),75,25,15,0,A,75,B:dropped_factor; C:derivative_power_error; D:substituted_directly_0_over_0
+Q116,C11,Mathematics,Easy,1,MCQ,Differentiate y = 2x^3,6x^3,2x^2,6x^2,6x^4,C,6x^2,A:forgot_to_reduce_power; B:forgot_to_multiply_by_power; D:integrated_instead
+Q117,C11,Mathematics,Easy,1,MCQ,Differentiate y = 6x^3,18x^4,6x^2,18x^2,18x^3,C,18x^2,A:integrated_instead; B:forgot_to_multiply_by_power; D:forgot_to_reduce_power
+Q118,C11,Mathematics,Easy,1,MCQ,Differentiate y = 4x^2,8x,8x^2,8x^3,4x,A,8x,B:forgot_to_reduce_power; C:integrated_instead; D:forgot_to_multiply_by_power
+Q119,C11,Mathematics,Easy,1,MCQ,Differentiate y = 6x^2,12x^3,6x,12x,12x^2,C,12x,A:integrated_instead; B:forgot_to_multiply_by_power; D:forgot_to_reduce_power
+Q120,C11,Mathematics,Medium,2,MCQ,Differentiate y = 3x^2 + 6x + 2,6x + 6,6x + 6x,6x + 8,6x,A,6x + 6,B:kept_x_in_linear_derivative; C:differentiated_constant_incorrectly; D:dropped_linear_term
+Q121,C11,Mathematics,Medium,2,MCQ,Differentiate y = 3x^3 + 2x + 3,9x^2,9x^2 + 5,9x^2 + 2,9x^2 + 2x,C,9x^2 + 2,A:dropped_linear_term; B:differentiated_constant_incorrectly; D:kept_x_in_linear_derivative
+Q122,C11,Mathematics,Medium,2,MCQ,Differentiate y = 6x^3 + 7x + 2,18x^2 + 7,18x^2 + 9,18x^2 + 7x,18x^2,A,18x^2 + 7,B:differentiated_constant_incorrectly; C:kept_x_in_linear_derivative; D:dropped_linear_term
+Q123,C11,Mathematics,Medium,2,MCQ,Differentiate y = 5x^5 + 7x + 6,25x^4 + 13,25x^4,25x^4 + 7,25x^4 + 7x,C,25x^4 + 7,A:differentiated_constant_incorrectly; B:dropped_linear_term; D:kept_x_in_linear_derivative
+Q124,C11,Mathematics,Hard,3,MCQ,Differentiate y = 2x^5 + 5x + 5,10x^4,10x^4 + 5,10x^4 + 10,10x^4 + 5x,B,10x^4 + 5,A:dropped_linear_term; C:differentiated_constant_incorrectly; D:kept_x_in_linear_derivative
+Q125,C11,Mathematics,Hard,3,MCQ,Differentiate y = 4x^6 + 2x + 5,24x^5 + 2x,24x^5 + 2,24x^5,24x^5 + 7,B,24x^5 + 2,A:kept_x_in_linear_derivative; C:dropped_linear_term; D:differentiated_constant_incorrectly
+Q126,C11,Mathematics,Hard,3,MCQ,Differentiate y = 2x^4 + 4x + 2,8x^3 + 6,8x^3,8x^3 + 4x,8x^3 + 4,D,8x^3 + 4,A:differentiated_constant_incorrectly; B:dropped_linear_term; C:kept_x_in_linear_derivative
+Q127,C11,Mathematics,Hard,3,MCQ,Differentiate y = 5x^6 + 6x + 1,30x^5,30x^5 + 6,30x^5 + 6x,30x^5 + 7,B,30x^5 + 6,A:dropped_linear_term; C:kept_x_in_linear_derivative; D:differentiated_constant_incorrectly
+Q128,C12,Mathematics,Easy,1,MCQ,Find x at which f(x) = x^2 - 6x + 7 is minimum,6,3,-3,9,B,3,A:forgot_to_halve; C:sign_error; D:confused_x_with_f_x
+Q129,C12,Mathematics,Easy,1,MCQ,Find x at which f(x) = x^2 - 8x + 7 is minimum,-4,16,8,4,D,4,A:sign_error; B:confused_x_with_f_x; C:forgot_to_halve
+Q130,C12,Mathematics,Easy,1,MCQ,Find x at which f(x) = x^2 - 10x + 7 is minimum,25,-5,5,10,C,5,A:confused_x_with_f_x; B:sign_error; D:forgot_to_halve
+Q131,C12,Mathematics,Medium,2,MCQ,Find the minimum value of f(x) = x^2 - 12x + 43,31,7,6,79,B,7,A:substituted_incorrectly; C:gave_x_not_value; D:sign_error
+Q132,C12,Mathematics,Medium,2,MCQ,Find the minimum value of f(x) = x^2 - 6x + 11,3,5,2,20,C,2,A:gave_x_not_value; B:substituted_incorrectly; D:sign_error
+Q133,C12,Mathematics,Medium,2,MCQ,Find the minimum value of f(x) = x^2 - 10x + 31,56,21,6,5,C,6,A:sign_error; B:substituted_incorrectly; D:gave_x_not_value
+Q134,C12,Mathematics,Medium,2,MCQ,Find the minimum value of f(x) = x^2 - 12x + 39,3,6,75,27,A,3,B:gave_x_not_value; C:sign_error; D:substituted_incorrectly
+Q135,C12,Mathematics,Hard,3,MCQ,Find the minimum value of f(x) = x^2 - 12x + 39,75,27,3,6,C,3,A:sign_error; B:substituted_incorrectly; D:gave_x_not_value
+Q136,C12,Mathematics,Hard,3,MCQ,Find the minimum value of f(x) = x^2 - 2x + 6,4,7,5,1,C,5,A:substituted_incorrectly; B:sign_error; D:gave_x_not_value
+Q137,C12,Mathematics,Hard,3,MCQ,Find the minimum value of f(x) = x^2 - 2x + 7,6,1,5,8,A,6,B:gave_x_not_value; C:substituted_incorrectly; D:sign_error
+Q138,C12,Mathematics,Hard,3,MCQ,Find the minimum value of f(x) = x^2 - 14x + 58,107,9,7,44,B,9,A:sign_error; C:gave_x_not_value; D:substituted_incorrectly
+Q139,C13,Mathematics,Easy,1,MCQ,Evaluate the integral of 8x^3 dx,2x^4,2x^4 + C,24x^2 + C,8x^4 + C,B,2x^4 + C,A:forgot_constant; C:differentiated_instead; D:forgot_to_divide_by_new_power
+Q140,C13,Mathematics,Easy,1,MCQ,Evaluate the integral of 12x^3 dx,3x^4,36x^2 + C,3x^4 + C,12x^4 + C,C,3x^4 + C,A:forgot_constant; B:differentiated_instead; D:forgot_to_divide_by_new_power
+Q141,C13,Mathematics,Easy,1,MCQ,Evaluate the integral of 12x^2 dx,4x^3 + C,12x^3 + C,24x + C,4x^3,A,4x^3 + C,B:forgot_to_divide_by_new_power; C:differentiated_instead; D:forgot_constant
+Q142,C13,Mathematics,Easy,1,MCQ,Evaluate the integral of 8x dx,4x^2 + C,8x^2 + C,8 + C,4x^2,A,4x^2 + C,B:forgot_to_divide_by_new_power; C:differentiated_instead; D:forgot_constant
+Q143,C13,Mathematics,Medium,2,MCQ,Evaluate the integral of 8x dx,8x^2 + C,4x^2,8 + C,4x^2 + C,D,4x^2 + C,A:forgot_to_divide_by_new_power; B:forgot_constant; C:differentiated_instead
+Q144,C13,Mathematics,Medium,2,MCQ,Evaluate the integral of 12x^3 dx,12x^4 + C,36x^2 + C,3x^4,3x^4 + C,D,3x^4 + C,A:forgot_to_divide_by_new_power; B:differentiated_instead; C:forgot_constant
+Q145,C13,Mathematics,Medium,2,MCQ,Evaluate the integral of 20x^4 dx,4x^5 + C,4x^5,20x^5 + C,80x^3 + C,A,4x^5 + C,B:forgot_constant; C:forgot_to_divide_by_new_power; D:differentiated_instead
+Q146,C13,Mathematics,Medium,2,MCQ,Evaluate the integral of 16x^3 dx,4x^4,48x^2 + C,16x^4 + C,4x^4 + C,D,4x^4 + C,A:forgot_constant; B:differentiated_instead; C:forgot_to_divide_by_new_power
+Q147,C13,Mathematics,Hard,3,MCQ,Evaluate the integral of 24x^5 dx,120x^4 + C,4x^6 + C,4x^6,24x^6 + C,B,4x^6 + C,A:differentiated_instead; C:forgot_constant; D:forgot_to_divide_by_new_power
+Q148,C13,Mathematics,Hard,3,MCQ,Evaluate the integral of 8x dx,8 + C,4x^2 + C,4x^2,8x^2 + C,B,4x^2 + C,A:differentiated_instead; C:forgot_constant; D:forgot_to_divide_by_new_power
+Q149,C13,Mathematics,Hard,3,MCQ,Evaluate the integral of 4x dx,4 + C,4x^2 + C,2x^2 + C,2x^2,C,2x^2 + C,A:differentiated_instead; B:forgot_to_divide_by_new_power; D:forgot_constant
+Q150,C13,Mathematics,Hard,3,MCQ,Evaluate the integral of 12x^3 dx,36x^2 + C,3x^4 + C,12x^4 + C,3x^4,B,3x^4 + C,A:differentiated_instead; C:forgot_to_divide_by_new_power; D:forgot_constant
+Q151,C14,Physics,Easy,1,MCQ,A body with u = 3 m/s accelerates at 6 m/s^2 for 5 s. Find the final velocity,33 m/s,45 m/s,30 m/s,14 m/s,A,33 m/s,B:wrong_bracket; C:forgot_initial_velocity; D:added_instead_of_multiplied
+Q152,C14,Physics,Easy,1,MCQ,A body with u = 2 m/s accelerates at 5 m/s^2 for 3 s. Find the final velocity,17 m/s,21 m/s,15 m/s,10 m/s,A,17 m/s,B:wrong_bracket; C:forgot_initial_velocity; D:added_instead_of_multiplied
+Q153,C14,Physics,Easy,1,MCQ,A body with u = 1 m/s accelerates at 6 m/s^2 for 3 s. Find the final velocity,19 m/s,18 m/s,10 m/s,21 m/s,A,19 m/s,B:forgot_initial_velocity; C:added_instead_of_multiplied; D:wrong_bracket
+Q154,C14,Physics,Easy,1,MCQ,A body with u = 2 m/s accelerates at 3 m/s^2 for 8 s. Find the final velocity,26 m/s,24 m/s,40 m/s,13 m/s,A,26 m/s,B:forgot_initial_velocity; C:wrong_bracket; D:added_instead_of_multiplied
+Q155,C14,Physics,Medium,2,MCQ,A body with u = 4 m/s accelerates at 8 m/s^2 for 4 s. Find the displacement,48 m,16 m,80 m,144 m,C,80 m,A:forgot_square_of_time; B:ignored_acceleration; D:forgot_half
+Q156,C14,Physics,Medium,2,MCQ,A body with u = 2 m/s accelerates at 8 m/s^2 for 3 s. Find the displacement,30 m,78 m,6 m,42 m,D,42 m,A:forgot_square_of_time; B:forgot_half; C:ignored_acceleration
+Q157,C14,Physics,Medium,2,MCQ,A body with u = 5 m/s accelerates at 4 m/s^2 for 7 s. Find the displacement,231 m,133 m,63 m,35 m,B,133 m,A:forgot_half; C:forgot_square_of_time; D:ignored_acceleration
+Q158,C14,Physics,Medium,2,MCQ,A body with u = 2 m/s accelerates at 4 m/s^2 for 8 s. Find the displacement,16 m,144 m,48 m,272 m,B,144 m,A:ignored_acceleration; C:forgot_square_of_time; D:forgot_half
+Q159,C14,Physics,Hard,3,MCQ,A body with u = 6 m/s accelerates at 6 m/s^2 for 6 s. Find the displacement,252 m,144 m,36 m,72 m,B,144 m,A:forgot_half; C:ignored_acceleration; D:forgot_square_of_time
+Q160,C14,Physics,Hard,3,MCQ,A body with u = 2 m/s accelerates at 8 m/s^2 for 4 s. Find the displacement,72 m,136 m,8 m,40 m,A,72 m,B:forgot_half; C:ignored_acceleration; D:forgot_square_of_time
+Q161,C14,Physics,Hard,3,MCQ,A body with u = 8 m/s accelerates at 6 m/s^2 for 6 s. Find the displacement,84 m,156 m,48 m,264 m,B,156 m,A:forgot_square_of_time; C:ignored_acceleration; D:forgot_half
+Q162,C14,Physics,Hard,3,MCQ,A body with u = 3 m/s accelerates at 2 m/s^2 for 6 s. Find the displacement,90 m,30 m,18 m,54 m,D,54 m,A:forgot_half; B:forgot_square_of_time; C:ignored_acceleration
+Q163,C15,Physics,Easy,1,MCQ,Find the force on a 4 kg mass accelerating at 2 m/s^2,6 N,8 N,80 N,2 N,B,8 N,A:added_mass_and_acceleration; C:confused_with_weight; D:divided_instead_of_multiplied
+Q164,C15,Physics,Easy,1,MCQ,Find the force on a 4 kg mass accelerating at 5 m/s^2,200 N,4/5 N,20 N,9 N,C,20 N,A:confused_with_weight; B:divided_instead_of_multiplied; D:added_mass_and_acceleration
+Q165,C15,Physics,Easy,1,MCQ,Find the force on a 3 kg mass accelerating at 6 m/s^2,180 N,1/2 N,18 N,9 N,C,18 N,A:confused_with_weight; B:divided_instead_of_multiplied; D:added_mass_and_acceleration
+Q166,C15,Physics,Easy,1,MCQ,Find the force on a 6 kg mass accelerating at 5 m/s^2,6/5 N,300 N,11 N,30 N,D,30 N,A:divided_instead_of_multiplied; B:confused_with_weight; C:added_mass_and_acceleration
+Q167,C15,Physics,Medium,2,MCQ,A 32 N force acts on a 6 kg block against 2 N friction. Find the acceleration,5 m/s^2,30 m/s^2,17/3 m/s^2,16/3 m/s^2,A,5 m/s^2,B:forgot_to_divide_by_mass; C:added_friction; D:ignored_friction
+Q168,C15,Physics,Medium,2,MCQ,A 41 N force acts on a 8 kg block against 1 N friction. Find the acceleration,41/8 m/s^2,21/4 m/s^2,40 m/s^2,5 m/s^2,D,5 m/s^2,A:ignored_friction; B:added_friction; C:forgot_to_divide_by_mass
+Q169,C15,Physics,Medium,2,MCQ,A 38 N force acts on a 7 kg block against 3 N friction. Find the acceleration,5 m/s^2,35 m/s^2,41/7 m/s^2,38/7 m/s^2,A,5 m/s^2,B:forgot_to_divide_by_mass; C:added_friction; D:ignored_friction
+Q170,C15,Physics,Medium,2,MCQ,A 37 N force acts on a 6 kg block against 1 N friction. Find the acceleration,6 m/s^2,37/6 m/s^2,19/3 m/s^2,36 m/s^2,A,6 m/s^2,B:ignored_friction; C:added_friction; D:forgot_to_divide_by_mass
+Q171,C15,Physics,Hard,3,MCQ,A 25 N force acts on a 7 kg block against 4 N friction. Find the acceleration,3 m/s^2,21 m/s^2,29/7 m/s^2,25/7 m/s^2,A,3 m/s^2,B:forgot_to_divide_by_mass; C:added_friction; D:ignored_friction
+Q172,C15,Physics,Hard,3,MCQ,A 17 N force acts on a 4 kg block against 1 N friction. Find the acceleration,9/2 m/s^2,17/4 m/s^2,16 m/s^2,4 m/s^2,D,4 m/s^2,A:added_friction; B:ignored_friction; C:forgot_to_divide_by_mass
+Q173,C15,Physics,Hard,3,MCQ,A 24 N force acts on a 5 kg block against 4 N friction. Find the acceleration,28/5 m/s^2,4 m/s^2,20 m/s^2,24/5 m/s^2,B,4 m/s^2,A:added_friction; C:forgot_to_divide_by_mass; D:ignored_friction
+Q174,C15,Physics,Hard,3,MCQ,A 27 N force acts on a 4 kg block against 3 N friction. Find the acceleration,24 m/s^2,6 m/s^2,27/4 m/s^2,15/2 m/s^2,B,6 m/s^2,A:forgot_to_divide_by_mass; C:ignored_friction; D:added_friction
+Q175,C16,Physics,Easy,1,MCQ,Find the kinetic energy of a 6 kg body moving at 6 m/s,18 J,54 J,216 J,108 J,D,108 J,A:forgot_square; B:halved_twice; C:forgot_half
+Q176,C16,Physics,Easy,1,MCQ,Find the kinetic energy of a 6 kg body moving at 5 m/s,37 J,15 J,75 J,150 J,C,75 J,A:halved_twice; B:forgot_square; D:forgot_half
+Q177,C16,Physics,Easy,1,MCQ,Find the kinetic energy of a 2 kg body moving at 4 m/s,16 J,32 J,4 J,8 J,A,16 J,B:forgot_half; C:forgot_square; D:halved_twice
+Q178,C16,Physics,Easy,1,MCQ,Find the kinetic energy of a 4 kg body moving at 3 m/s,18 J,36 J,9 J,6 J,A,18 J,B:forgot_half; C:halved_twice; D:forgot_square
+Q179,C16,Physics,Medium,2,MCQ,Find the kinetic energy of a 4 kg body moving at 8 m/s,128 J,16 J,64 J,256 J,A,128 J,B:forgot_square; C:halved_twice; D:forgot_half
+Q180,C16,Physics,Medium,2,MCQ,Find the kinetic energy of a 8 kg body moving at 4 m/s,128 J,16 J,64 J,32 J,C,64 J,A:forgot_half; B:forgot_square; D:halved_twice
+Q181,C16,Physics,Medium,2,MCQ,Find the kinetic energy of a 8 kg body moving at 6 m/s,288 J,24 J,144 J,72 J,C,144 J,A:forgot_half; B:forgot_square; D:halved_twice
+Q182,C16,Physics,Medium,2,MCQ,Find the kinetic energy of a 10 kg body moving at 4 m/s,20 J,160 J,40 J,80 J,D,80 J,A:forgot_square; B:forgot_half; C:halved_twice
+Q183,C16,Physics,Hard,3,MCQ,Find the kinetic energy of a 8 kg body moving at 9 m/s,648 J,324 J,162 J,36 J,B,324 J,A:forgot_half; C:halved_twice; D:forgot_square
+Q184,C16,Physics,Hard,3,MCQ,Find the kinetic energy of a 2 kg body moving at 8 m/s,64 J,8 J,32 J,128 J,A,64 J,B:forgot_square; C:halved_twice; D:forgot_half
+Q185,C16,Physics,Hard,3,MCQ,Find the kinetic energy of a 8 kg body moving at 7 m/s,28 J,98 J,392 J,196 J,D,196 J,A:forgot_square; B:halved_twice; C:forgot_half
+Q186,C16,Physics,Hard,3,MCQ,Find the kinetic energy of a 10 kg body moving at 10 m/s,500 J,50 J,250 J,1000 J,A,500 J,B:forgot_square; C:halved_twice; D:forgot_half
+Q187,C17,Physics,Easy,1,MCQ,A current of 2 A flows for 8 s. Find the charge,16 C,1/4 C,10 C,32 C,A,16 C,B:divided_instead_of_multiplied; C:added; D:doubled
+Q188,C17,Physics,Easy,1,MCQ,A current of 6 A flows for 3 s. Find the charge,9 C,36 C,18 C,2 C,C,18 C,A:added; B:doubled; D:divided_instead_of_multiplied
+Q189,C17,Physics,Easy,1,MCQ,A current of 4 A flows for 7 s. Find the charge,4/7 C,56 C,28 C,11 C,C,28 C,A:divided_instead_of_multiplied; B:doubled; D:added
+Q190,C17,Physics,Easy,1,MCQ,A current of 6 A flows for 10 s. Find the charge,3/5 C,60 C,16 C,120 C,B,60 C,A:divided_instead_of_multiplied; C:added; D:doubled
+Q191,C17,Physics,Medium,2,MCQ,A current of 2 A flows for 2 minutes. Find the charge,240 C,400 C,1/15 C,4 C,A,240 C,B:used_100_instead_of_60; C:converted_wrong_direction; D:forgot_unit_conversion
+Q192,C17,Physics,Medium,2,MCQ,A current of 5 A flows for 10 minutes. Find the charge,50 C,5/6 C,3000 C,5000 C,C,3000 C,A:forgot_unit_conversion; B:converted_wrong_direction; D:used_100_instead_of_60
+Q193,C17,Physics,Medium,2,MCQ,A current of 4 A flows for 7 minutes. Find the charge,1680 C,7/15 C,2800 C,28 C,A,1680 C,B:converted_wrong_direction; C:used_100_instead_of_60; D:forgot_unit_conversion
+Q194,C17,Physics,Medium,2,MCQ,A current of 6 A flows for 7 minutes. Find the charge,2520 C,42 C,7/10 C,4200 C,A,2520 C,B:forgot_unit_conversion; C:converted_wrong_direction; D:used_100_instead_of_60
+Q195,C17,Physics,Hard,3,MCQ,A current of 5 A flows for 2 minutes. Find the charge,1000 C,600 C,10 C,1/6 C,B,600 C,A:used_100_instead_of_60; C:forgot_unit_conversion; D:converted_wrong_direction
+Q196,C17,Physics,Hard,3,MCQ,A current of 5 A flows for 6 minutes. Find the charge,3000 C,30 C,1/2 C,1800 C,D,1800 C,A:used_100_instead_of_60; B:forgot_unit_conversion; C:converted_wrong_direction
+Q197,C17,Physics,Hard,3,MCQ,A current of 4 A flows for 5 minutes. Find the charge,2000 C,20 C,1/3 C,1200 C,D,1200 C,A:used_100_instead_of_60; B:forgot_unit_conversion; C:converted_wrong_direction
+Q198,C17,Physics,Hard,3,MCQ,A current of 3 A flows for 10 minutes. Find the charge,30 C,1/2 C,1800 C,3000 C,C,1800 C,A:forgot_unit_conversion; B:converted_wrong_direction; D:used_100_instead_of_60
+Q199,C18,Physics,Easy,1,MCQ,Find the voltage across a 3 ohm resistor carrying 2 A,5 V,12 V,6 V,3/2 V,C,6 V,A:added; B:used_power_formula; D:divided_instead_of_multiplied
+Q200,C18,Physics,Easy,1,MCQ,Find the voltage across a 8 ohm resistor carrying 4 A,12 V,32 V,128 V,2 V,B,32 V,A:added; C:used_power_formula; D:divided_instead_of_multiplied
+Q201,C18,Physics,Easy,1,MCQ,Find the voltage across a 10 ohm resistor carrying 5 A,2 V,50 V,15 V,250 V,B,50 V,A:divided_instead_of_multiplied; C:added; D:used_power_formula
+Q202,C18,Physics,Easy,1,MCQ,Find the voltage across a 10 ohm resistor carrying 3 A,30 V,90 V,13 V,10/3 V,A,30 V,B:used_power_formula; C:added; D:divided_instead_of_multiplied
+Q203,C18,Physics,Medium,2,MCQ,Resistors of 10 ohm and 8 ohm in series across 90 V. Find the current,1620 A,9 A,5 A,9/8 A,C,5 A,A:multiplied_instead_of_divided; B:used_one_resistor; D:multiplied_series_resistors
+Q204,C18,Physics,Medium,2,MCQ,Resistors of 7 ohm and 10 ohm in series across 102 V. Find the current,6 A,102/7 A,1734 A,51/35 A,A,6 A,B:used_one_resistor; C:multiplied_instead_of_divided; D:multiplied_series_resistors
+Q205,C18,Physics,Medium,2,MCQ,Resistors of 9 ohm and 5 ohm in series across 84 V. Find the current,6 A,28/15 A,1176 A,28/3 A,A,6 A,B:multiplied_series_resistors; C:multiplied_instead_of_divided; D:used_one_resistor
+Q206,C18,Physics,Medium,2,MCQ,Resistors of 6 ohm and 6 ohm in series across 36 V. Find the current,3 A,432 A,1 A,6 A,A,3 A,B:multiplied_instead_of_divided; C:multiplied_series_resistors; D:used_one_resistor
+Q207,C18,Physics,Hard,3,MCQ,Resistors of 9 ohm and 7 ohm in series across 64 V. Find the current,1024 A,4 A,64/9 A,64/63 A,B,4 A,A:multiplied_instead_of_divided; C:used_one_resistor; D:multiplied_series_resistors
+Q208,C18,Physics,Hard,3,MCQ,Resistors of 10 ohm and 8 ohm in series across 108 V. Find the current,27/20 A,6 A,54/5 A,1944 A,B,6 A,A:multiplied_series_resistors; C:used_one_resistor; D:multiplied_instead_of_divided
+Q209,C18,Physics,Hard,3,MCQ,Resistors of 2 ohm and 6 ohm in series across 32 V. Find the current,256 A,8/3 A,16 A,4 A,D,4 A,A:multiplied_instead_of_divided; B:multiplied_series_resistors; C:used_one_resistor
+Q210,C18,Physics,Hard,3,MCQ,Resistors of 9 ohm and 5 ohm in series across 56 V. Find the current,4 A,784 A,56/45 A,56/9 A,A,4 A,B:multiplied_instead_of_divided; C:multiplied_series_resistors; D:used_one_resistor
