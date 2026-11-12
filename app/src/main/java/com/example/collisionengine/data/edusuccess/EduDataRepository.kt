@@ -29,8 +29,8 @@ object EduDataRepository {
     private var _voiceSessions: List<VoiceSessionRow> = emptyList()
 
     // Larger transactional/log datasets loaded asynchronously right after startup
-    private var _submissions: List<SubmissionRow> = emptyList()
-    private var _gradingResults: List<GradingResultRow> = emptyList()
+    private val _submissions = mutableStateListOf<SubmissionRow>()
+    private val _gradingResults = mutableStateListOf<GradingResultRow>()
     private var _engagementLogs: List<EngagementRow> = emptyList()
     private var _quizAttempts: List<QuizAttemptRow> = emptyList()
     private var _attendance: List<AttendanceRow> = emptyList()
@@ -269,8 +269,10 @@ object EduDataRepository {
                     )
                 }
 
-                _submissions = subs
-                _gradingResults = grades
+                _submissions.clear()
+                _submissions.addAll(subs)
+                _gradingResults.clear()
+                _gradingResults.addAll(grades)
                 _engagementLogs = eng
                 _quizAttempts = quizzes
                 _attendance = att
@@ -332,6 +334,45 @@ object EduDataRepository {
 
     fun getGradingForSubmission(submissionId: String): List<GradingResultRow> =
         _gradingResults.filter { it.submissionId == submissionId }
+
+    fun recordLiveAiSubmission(
+        studentId: String,
+        assignment: AssignmentRow,
+        score: Float,
+        feedback: String,
+        confidence: Float = 0.92f
+    ): String {
+        val subId = "SUB_LIVE_${_submissions.size + 1}"
+        _submissions.add(
+            0,
+            SubmissionRow(
+                submissionId = subId,
+                studentId = studentId,
+                assignmentId = assignment.assignmentId,
+                answerFile = "uploads/$studentId/${assignment.assignmentId}_handwritten_scan.jpg",
+                submissionType = "handwritten",
+                submittedAt = "Just now",
+                isLate = false
+            )
+        )
+        _gradingResults.add(
+            0,
+            GradingResultRow(
+                submissionId = subId,
+                questionNo = assignment.questionNo,
+                conceptId = assignment.conceptId,
+                maxMarks = assignment.maxMarks,
+                marks = score,
+                feedback = feedback,
+                confidence = confidence,
+                reviewStatus = if (confidence >= 0.75f) "Auto-approved" else "Needs Teacher Review",
+                teacherOverrideMarks = null,
+                finalMarks = score,
+                gradedBy = "Llama-3.2-Vision + GPT"
+            )
+        )
+        return subId
+    }
 
     fun getAssignmentItems(assignmentId: String): List<AssignmentRow> =
         _assignments.filter { it.assignmentId == assignmentId }

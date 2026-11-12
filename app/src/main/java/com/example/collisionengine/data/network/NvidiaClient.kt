@@ -1,5 +1,6 @@
 package com.example.collisionengine.data.network
 
+import com.example.collisionengine.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -9,7 +10,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 object NvidiaClient {
-    private val NVIDIA_API_KEY = System.getenv("NVIDIA_API_KEY") ?: ""
+    private val NVIDIA_API_KEY = BuildConfig.NVIDIA_API_KEY.ifBlank {
+        System.getenv("NVIDIA_API_KEY") ?: ""
+    }
     private const val MODEL_NAME = "meta/llama-3.2-11b-vision-instruct"
 
     suspend fun enhanceAnswer(userQuery: String, genieData: String): String = withContext(Dispatchers.IO) {
