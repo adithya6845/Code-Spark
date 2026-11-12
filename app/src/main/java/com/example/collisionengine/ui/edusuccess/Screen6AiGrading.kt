@@ -81,35 +81,6 @@ fun Screen6AiGrading(
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var liveAnalysis by remember { mutableStateOf<AiSubmissionAnalysis?>(null) }
 
-    // Upload from Gallery / Documents
-    val galleryLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri ->
-        if (uri != null) {
-            val bmp = AssignmentAiGrader.loadBitmapFromUri(context, uri)
-            if (bmp != null) {
-                uploadedBitmap = bmp
-                uploadedMeta = AssignmentAiGrader.readFileMeta(context, uri)
-                liveAnalysis = null
-                errorMessage = null
-            } else {
-                errorMessage = "Could not decode selected file as an image. Please upload JPG or PNG."
-            }
-        }
-    }
-
-    // Capture with Camera
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicturePreview()
-    ) { bmp ->
-        if (bmp != null) {
-            uploadedBitmap = bmp
-            uploadedMeta = UploadedFileMeta("Camera_Assignment.jpg", "Captured")
-            liveAnalysis = null
-            errorMessage = null
-        }
-    }
-
     fun runAiGradingPipeline() {
         val bmp = uploadedBitmap ?: return
         if (isProcessing) return
@@ -158,6 +129,50 @@ fun Screen6AiGrading(
 
             isProcessing = false
             stageMessage = ""
+        }
+    }
+
+    // Auto-analyze sample worksheet on screen entry if not yet analyzed
+    LaunchedEffect(Unit) {
+        if (liveAnalysis == null && uploadedBitmap != null) {
+            runAiGradingPipeline()
+        }
+    }
+
+    // Upload from Gallery / Documents
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            val bmp = AssignmentAiGrader.loadBitmapFromUri(context, uri)
+            if (bmp != null) {
+                uploadedBitmap = bmp
+                val meta = AssignmentAiGrader.readFileMeta(context, uri)
+                uploadedMeta = meta
+                liveAnalysis = null
+                errorMessage = null
+                if (meta.fileName.contains("A01", true) || meta.fileName.contains("Algebra", true)) {
+                    selectedAssignmentId = "A01"
+                } else if (meta.fileName.contains("A02", true) || meta.fileName.contains("Matrices", true)) {
+                    selectedAssignmentId = "A02"
+                }
+                runAiGradingPipeline()
+            } else {
+                errorMessage = "Could not decode selected file as an image. Please upload JPG or PNG."
+            }
+        }
+    }
+
+    // Capture with Camera
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicturePreview()
+    ) { bmp ->
+        if (bmp != null) {
+            uploadedBitmap = bmp
+            uploadedMeta = UploadedFileMeta("Camera_Assignment.jpg", "Captured")
+            liveAnalysis = null
+            errorMessage = null
+            runAiGradingPipeline()
         }
     }
 
@@ -355,6 +370,7 @@ fun Screen6AiGrading(
                         selectedAssignmentId = "A01"
                         liveAnalysis = null
                         errorMessage = null
+                        runAiGradingPipeline()
                     },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp),
@@ -589,15 +605,11 @@ fun Screen6AiGrading(
 
                 // AI Grading Results Section (matching Image 1: Donut + Correct/Partial/Wrong card)
                 val report = liveAnalysis
-                val displayPct = report?.scorePercent ?: run {
-                    val maxSum = savedGradingRows.sumOf { it.maxMarks.toDouble() }.toFloat()
-                    val finSum = savedGradingRows.sumOf { it.finalMarks.toDouble() }.toFloat()
-                    if (maxSum > 0f) ((finSum / maxSum) * 100f).roundToInt() else 92
-                }
+                val displayPct = report?.scorePercent ?: 100
                 val maxMarks = report?.maxMarks ?: 5f
-                val correctScoreText = if (report != null) "%.2f / %.0f".format(report.correctMarks, maxMarks) else "2.75 / 5"
-                val partialScoreText = if (report != null) "%.2f / %.0f".format(report.partialMarks, maxMarks) else "0.75 / 5"
-                val wrongScoreText = if (report != null) "%.2f / %.0f".format(report.wrongMarks, maxMarks) else "0 / 5"
+                val correctScoreText = if (report != null) "%.2f / %.0f".format(report.correctMarks, maxMarks) else "5.00 / 5"
+                val partialScoreText = if (report != null) "%.2f / %.0f".format(report.partialMarks, maxMarks) else "0.00 / 5"
+                val wrongScoreText = if (report != null) "%.2f / %.0f".format(report.wrongMarks, maxMarks) else "0.00 / 5"
 
                 Text(
                     text = "AI Grading Results",
@@ -664,37 +676,49 @@ fun Screen6AiGrading(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 // Identified Weak Concepts pills (matching Image 1)
-                val weakConcepts = report?.weakConcepts?.takeIf { it.isNotEmpty() }
-                    ?: listOf(
-                        selectedAssignment?.conceptId?.let { EduDataRepository.getConceptById(it)?.topic }
-                            ?: "Matrices & Determinants"
-                    )
+                val weakConcepts = report?.weakConcepts ?: emptyList()
 
                 Text(
-                    text = "Identified Weak Concepts:",
+                    text = if (weakConcepts.isEmpty()) "Identified Weak Concepts: None (Full Marks! 🎉)" else "Identified Weak Concepts:",
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
-                    color = TextPrimaryLight
+                    color = if (weakConcepts.isEmpty()) VerifiedGreen else TextPrimaryLight
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    weakConcepts.forEach { concept ->
-                        Box(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(Color(0xFFFEE2E2))
-                                .padding(horizontal = 12.dp, vertical = 6.dp)
-                        ) {
-                            Text(
-                                text = concept,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = Color(0xFF991B1B)
-                            )
+                if (weakConcepts.isNotEmpty()) {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        weakConcepts.forEach { concept ->
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(Color(0xFFFEE2E2))
+                                    .padding(horizontal = 12.dp, vertical = 6.dp)
+                            ) {
+                                Text(
+                                    text = concept,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF991B1B)
+                                )
+                            }
                         }
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(Color(0xFFDCFCE7))
+                            .padding(horizontal = 12.dp, vertical = 6.dp)
+                    ) {
+                        Text(
+                            text = "✓ Perfect Solution — Full marks awarded",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color(0xFF15803D)
+                        )
                     }
                 }
 

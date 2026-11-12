@@ -59,7 +59,7 @@ class PlacementViewModel(application: Application) : AndroidViewModel(applicatio
             } else {
                 // Direct database question
                 try {
-                    val liveDatabricks = DatabricksClient.askGenie(query)
+                    val liveDatabricks = DatabricksClient.askGenie(query, getApplication<Application>().applicationContext)
                     if (liveDatabricks.isNotBlank() && !liveDatabricks.contains("Failed", true) && !liveDatabricks.contains("not directly related", true)) {
                         answerText = liveDatabricks
                     }

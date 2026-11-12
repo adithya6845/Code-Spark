@@ -28,6 +28,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "NVIDIA_API_KEY", "\"${localProp("NVIDIA_API_KEY")}\"")
         buildConfigField("String", "OPENAI_API_KEY", "\"${localProp("OPENAI_API_KEY")}\"")
+        buildConfigField("String", "DATABRICKS_HOST", "\"${localProp("DATABRICKS_HOST")}\"")
+        buildConfigField("String", "DATABRICKS_TOKEN", "\"${localProp("DATABRICKS_TOKEN")}\"")
+        buildConfigField("String", "DATABRICKS_SPACE_ID", "\"${localProp("DATABRICKS_SPACE_ID")}\"")
     }
 
     buildTypes {

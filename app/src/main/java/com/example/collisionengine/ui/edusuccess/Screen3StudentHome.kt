@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -50,7 +51,8 @@ fun Screen3StudentHome(
     onNavigateToCelebration: () -> Unit,
     onOpenDrawer: () -> Unit,
     onOpenSwitcher: () -> Unit,
-    onBottomTabSelected: (String) -> Unit
+    onBottomTabSelected: (String) -> Unit,
+    onNavigateToCampusBot: () -> Unit = {}
 ) {
     val studentId = EduDataRepository.selectedStudentId
     val isCoreLoaded = EduDataRepository.isCoreLoaded
@@ -309,7 +311,7 @@ fun Screen3StudentHome(
             ) {
                 QuickAccessItem(
                     title = "My Learning",
-                    icon = Icons.Filled.MenuBook,
+                    icon = Icons.AutoMirrored.Filled.MenuBook,
                     bgColor = Color(0xFFEFF6FF),
                     iconColor = PrimaryBlue,
                     onClick = onNavigateToLesson
@@ -329,11 +331,11 @@ fun Screen3StudentHome(
                     onClick = onNavigateToQuizzes
                 )
                 QuickAccessItem(
-                    title = "Messages",
-                    icon = Icons.Filled.MarkEmailUnread,
-                    bgColor = Color(0xFFF5F3FF),
-                    iconColor = AccentPurple,
-                    onClick = onNavigateToProgress
+                    title = "Campus Bot",
+                    icon = Icons.Filled.SmartToy,
+                    bgColor = Color(0xFFEFF6FF),
+                    iconColor = PrimaryBlue,
+                    onClick = onNavigateToCampusBot
                 )
             }
 

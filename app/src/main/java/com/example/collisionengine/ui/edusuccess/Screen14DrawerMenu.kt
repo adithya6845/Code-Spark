@@ -152,6 +152,13 @@ fun Screen14DrawerMenu(
             )
 
             DrawerMenuItem(
+                icon = Icons.Filled.SmartToy,
+                title = "Campus Connect AI (Genie)",
+                isSelected = selectedRoute == "Campus Connect AI",
+                onClick = { onNavigate("research") }
+            )
+
+            DrawerMenuItem(
                 icon = Icons.Filled.Settings,
                 title = "Settings",
                 isSelected = selectedRoute == "Settings",

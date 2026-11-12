@@ -47,7 +47,8 @@ val all15Screens = listOf(
     ScreenItem("offline_mode", "12. Offline Mode", Icons.Filled.Flight, "Row 3"),
     ScreenItem("prediction_report", "13. Prediction Report", Icons.Filled.CheckCircle, "Row 3"),
     ScreenItem("drawer_menu", "14. Navigation Drawer", Icons.Filled.Menu, "Row 3"),
-    ScreenItem("celebration", "15. You're on Track!", Icons.Filled.EmojiEvents, "Row 3")
+    ScreenItem("celebration", "15. You're on Track!", Icons.Filled.EmojiEvents, "Row 3"),
+    ScreenItem("research", "Campus Connect AI", Icons.Filled.SmartToy, "Genie")
 )
 
 @OptIn(ExperimentalMaterial3Api::class)

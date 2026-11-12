@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 
 class ResearchViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val appContext = application.applicationContext
+
     private val _queryText = MutableStateFlow("")
     val queryText: StateFlow<String> = _queryText.asStateFlow()
 
@@ -24,8 +26,8 @@ class ResearchViewModel(application: Application) : AndroidViewModel(application
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     init {
-        CampusGenieSearchEngine.init(application.applicationContext)
-        LocalDatasetClient.init(application.applicationContext)
+        CampusGenieSearchEngine.init(appContext)
+        LocalDatasetClient.init(appContext)
     }
 
     fun onQueryChanged(newText: String) {
@@ -45,14 +47,16 @@ class ResearchViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             var answerText = ""
             try {
-                val liveDatabricks = DatabricksClient.askGenie(query)
-                if (liveDatabricks.isNotBlank() && !liveDatabricks.contains("Failed", true) && !liveDatabricks.contains("not directly related", true)) {
+                // 1. Query live Databricks Genie
+                val liveDatabricks = DatabricksClient.askGenie(query, appContext)
+                if (liveDatabricks.isNotBlank() && !liveDatabricks.contains("Failed", true)) {
                     answerText = liveDatabricks
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
+            // 2. Fallback to CampusGenieSearchEngine
             if (answerText.isBlank()) {
                 val genieSearch = CampusGenieSearchEngine.answerQuery(query)
                 answerText = genieSearch.text
